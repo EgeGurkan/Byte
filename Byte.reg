@@ -1,0 +1,1216 @@
+﻿Windows Registry Editor Version 5.00
+
+; Disable UAC
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
+"PromptOnSecureDesktop"=dword:00000000
+"ConsentPromptBehaviorAdmin"=dword:00000000
+"ConsentPromptBehaviorUser"=dword:00000000
+"EnableLUA"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\UIPI]
+@="0x00000001(1)"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies]
+"FilterAdministratorToken"=dword:00000001
+
+; Disable SAC
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CI\Policy]
+"VerifiedAndReputablePolicyState"=dword:00000000
+
+; Bypass Restrictions
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\CompatMarkers]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Shared]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TargetVersionUpgradeExperienceIndicators]
+
+[HKEY_LOCAL_MACHINE\SYSTEM\Setup\LabConfig]
+"BypassSecureBootCheck"=dword:00000001
+"BypassTPMCheck"=dword:00000001
+"BypassCPUCheck"=dword:00000001
+"BypassRAMCheck"=dword:00000001
+"BypassStorageCheck"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SYSTEM\Setup\MoSetup]
+"AllowUpgradesWithUnsupportedTPMOrCPU"=dword:00000001
+
+[HKEY_CURRENT_USER\Control Panel\UnsupportedHardwareNotificationCache]
+"SV1"=dword:00000000
+"SV2"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
+"HideUnsupportedHardwareNotifications"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\OOBE]
+"BypassNRO"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\HwReqChk]
+"HwReqChkVars"=hex(7):53,00,51,00,5f,00,53,00,65,00,63,00,75,00,72,00,65,00,42,\
+  00,6f,00,6f,00,74,00,43,00,61,00,70,00,61,00,62,00,6c,00,65,00,3d,00,54,00,\
+  52,00,55,00,45,00,00,00,53,00,51,00,5f,00,53,00,65,00,63,00,75,00,72,00,65,\
+  00,42,00,6f,00,6f,00,74,00,45,00,6e,00,61,00,62,00,6c,00,65,00,64,00,3d,00,\
+  54,00,52,00,55,00,45,00,00,00,53,00,51,00,5f,00,54,00,70,00,6d,00,56,00,65,\
+  00,72,00,73,00,69,00,6f,00,6e,00,3d,00,32,00,00,00,53,00,51,00,5f,00,52,00,\
+  61,00,6d,00,4d,00,42,00,3d,00,38,00,31,00,39,00,32,00,00,00,00,00
+
+; Take Ownership
+[HKEY_CLASSES_ROOT\*\Shell\Ownership]
+@="Ownership"
+"Icon"=""
+"Extended"=""
+"HasLUAShield"=""
+"NoWorkingDirectory"=""
+"Position"="Middle"
+
+[HKEY_CLASSES_ROOT\*\Shell\Ownership\Command]
+@="powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l' -Verb runAs\""
+"IsolatedCommand"= "powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l' -Verb runAs\""
+
+[HKEY_CLASSES_ROOT\Directory\Shell\Ownership]
+@="Ownership"
+"Icon"=""
+"Extended"=""
+"HasLUAShield"=""
+"NoWorkingDirectory"=""
+"Position"="Middle"
+"AppliesTo"="NOT (System.ItemPathDisplay:=\"C:\\Users\" OR System.ItemPathDisplay:=\"C:\\ProgramData\" OR System.ItemPathDisplay:=\"C:\\Windows\" OR System.ItemPathDisplay:=\"C:\\Windows\\System32\" OR System.ItemPathDisplay:=\"C:\\Program Files\" OR System.ItemPathDisplay:=\"C:\\Program Files (x86)\")"
+
+[HKEY_CLASSES_ROOT\Directory\Shell\Ownership\Command]
+@="powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" /r /d y && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l /q' -Verb runAs\""
+"IsolatedCommand"="powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" /r /d y && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l /q' -Verb runAs\""
+
+[HKEY_CLASSES_ROOT\Drive\Shell\Runas]
+@="Ownership"
+"Icon"=""
+"Extended"=""
+"HasLUAShield"=""
+"NoWorkingDirectory"=""
+"Position"="Middle"
+"AppliesTo"="NOT (System.ItemPathDisplay:=\"C:\\\")"
+
+[HKEY_CLASSES_ROOT\Drive\shell\runas\command]
+@="cmd.exe /c takeown /f \"%1\\\" /r /d y && icacls \"%1\\\" /grant *S-1-3-4:F /t /c"
+"IsolatedCommand"="cmd.exe /c takeown /f \"%1\\\" /r /d y && icacls \"%1\\\" /grant *S-1-3-4:F /t /c"
+
+; To Allow Mapped Drives To Be Available In Elevated PowerShell
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
+"EnableLinkedConnections"=dword:00000001
+
+; CMD Window GUI Settings
+[HKEY_CURRENT_USER\Console]
+"ColorTable00"=dword:002e232d
+"ColorTable01"=dword:00da3700
+"ColorTable02"=dword:000ea113
+"ColorTable03"=dword:00dd963a
+"ColorTable04"=dword:001f0fc5
+"ColorTable05"=dword:00981788
+"ColorTable06"=dword:00009cc1
+"ColorTable07"=dword:00cccccc
+"ColorTable08"=dword:00000000
+"ColorTable09"=dword:00ff783b
+"ColorTable10"=dword:000cc616
+"ColorTable11"=dword:00d6d661
+"ColorTable12"=dword:005648e7
+"ColorTable13"=dword:009e00b4
+"ColorTable14"=dword:00a5f1f9
+"ColorTable15"=dword:00f2f2f2
+"CtrlKeyShortcutsDisabled"=dword:00000000
+"CursorColor"=dword:ffffffff
+"CursorSize"=dword:00000019
+"DefaultBackground"=dword:ffffffff
+"DefaultForeground"=dword:ffffffff
+"EnableColorSelection"=dword:00000000
+"ExtendedEditKey"=dword:00000001
+"ExtendedEditKeyCustom"=dword:00000000
+"FaceName"="Consolas"
+"FilterOnPaste"=dword:00000001
+"FontFamily"=dword:00000036
+"FontSize"=dword:000f0000
+"FontWeight"=dword:00000190
+"ForceV2"=dword:00000001
+"FullScreen"=dword:00000000
+"HistoryBufferSize"=dword:00000032
+"HistoryNoDup"=dword:00000000
+"InsertMode"=dword:00000001
+"LineSelection"=dword:00000001
+"LineWrap"=dword:00000001
+"LoadConIme"=dword:00000001
+"NumberOfHistoryBuffers"=dword:00000004
+"PopupColors"=dword:000000f5
+"QuickEdit"=dword:00000001
+"ScreenBufferSize"=dword:23290064
+"ScreenColors"=dword:00000087
+"ScrollScale"=dword:00000001
+"TerminalScrolling"=dword:00000000
+"TrimLeadingZeros"=dword:00000000
+"WindowAlpha"=dword:000000d9
+"WindowSize"=dword:00190064
+"WordDelimiters"=dword:00000000
+"CurrentPage"=dword:00000001
+"CursorType"=dword:00000000
+"InterceptCopyPaste"=dword:00000000
+
+; Context Menu New
+; Remove Shortcut
+[-HKEY_CLASSES_ROOT\.lnk\ShellNew]
+
+; Remove BMP
+[-HKEY_CLASSES_ROOT\.bmp\ShellNew]
+
+; Remove Rar
+[-HKEY_CLASSES_ROOT\.rar\ShellNew]
+
+; Remove RTF
+[-HKEY_CLASSES_ROOT\.rtf\ShellNew]
+
+; Remove PSD
+[-HKEY_CLASSES_ROOT\.psd\ShellNew]
+
+; Remove Zip
+[-HKEY_CLASSES_ROOT\.zip\CompressedFolder\ShellNew]
+[-HKEY_CLASSES_ROOT\.zip\ShellNew]
+
+; Remove Microsoft Excel Worksheet
+[-HKEY_CLASSES_ROOT\.xlsx\Excel.Sheet.12\ShellNew]
+
+; Remove Microsoft Word Document
+[-HKEY_CLASSES_ROOT\.docx\Word.Document.12\ShellNew]
+
+; Remove Microsoft PowerPoint Presentation
+[-HKEY_CLASSES_ROOT\.pptx\PowerPoint.Show.12\ShellNew]
+
+; Remove Microsoft Publisher Document
+[-HKEY_CLASSES_ROOT\.pub\Publisher.Document.16\ShellNew]
+
+; Remove Microsoft Access Database
+[-HKEY_CLASSES_ROOT\.accdb\Access.Application.16\ShellNew]
+[-HKEY_CLASSES_ROOT\.mdb\ShellNew]
+
+; Remove Open Command Prompt Here From Right Click Context Menu
+[-HKEY_CLASSES_ROOT\DesktopBackground\shell\CommandPrompt]
+[-HKEY_CLASSES_ROOT\Directory\shell\CommandPrompt]
+[-HKEY_CLASSES_ROOT\Directory\Background\shell\CommandPrompt]
+[-HKEY_CLASSES_ROOT\Drive\shell\CommandPrompt]
+[-HKEY_CLASSES_ROOT\LibraryFolder\Background\shell\CommandPrompt]
+
+; Remove Open Powershell Here From Right Click Context Menu
+[-HKEY_CLASSES_ROOT\Directory\Background\shell\PowerShell]
+[-HKEY_CLASSES_ROOT\Directory\shell\PowerShell]
+[-HKEY_CLASSES_ROOT\Drive\shell\PowerShell]
+[-HKEY_CLASSES_ROOT\LibraryFolder\Background\shell\PowerShell]
+
+; Add Terminal To Shift Right Click Context Menu
+; Desktop
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Terminal]
+"Icon"=""
+"MUIVerb"="Terminal"
+"Extended"=""
+"SubCommands"=""
+
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Terminal\Shell\CMD]
+@="Command Prompt"
+"HasLUAShield"=""
+"Icon"="imageres.dll,-5323"
+
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Terminal\Shell\CMD\Command]
+@="cmd /c echo|set/p=\"%V\"|powerShell -NoP -W 1 -NonI -NoL \"SaPs 'cmd' -Args '/c \"\"\"cd /d',$([char]34+$Input+[char]34),'^&^& start /b cmd.exe\"\"\"' -Verb RunAs\""
+
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Terminal\Shell\PowerShell]
+@="PowerShell"
+"HasLUAShield"=""
+"Icon"="PowerShell.exe"
+
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Terminal\Shell\PowerShell\Command]
+@="PowerShell -Command \"Start-Process cmd -ArgumentList '/s,/k,pushd %V && start PowerShell -NoExit && exit' -Verb RunAs\""
+
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Terminal\Shell\LinuxShell]
+@="LinuxShell"
+"HasLUAShield"=""
+"Icon"="WSL.exe"
+
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Terminal\Shell\LinuxShell\Command]
+@="wsl.exe --cd \"%V\""
+
+; Directory
+[HKEY_CLASSES_ROOT\Directory\Shell\Terminal]
+"Icon"=""
+"MUIVerb"="Terminal"
+"Extended"=""
+"SubCommands"=""
+
+[HKEY_CLASSES_ROOT\Directory\Shell\Terminal\Shell\CMD]
+@="Command Prompt"
+"HasLUAShield"=""
+"Icon"="imageres.dll,-5323"
+
+[HKEY_CLASSES_ROOT\Directory\Shell\Terminal\Shell\CMD\Command]
+@="cmd /c echo|set/p=\"%L\"|powerShell -NoP -W 1 -NonI -NoL \"SaPs 'cmd' -Args '/c \"\"\"cd /d',$([char]34+$Input+[char]34),'^&^& start /b cmd.exe\"\"\"' -Verb RunAs\""
+
+[HKEY_CLASSES_ROOT\Directory\Shell\Terminal\Shell\PowerShell]
+@="PowerShell"
+"HasLUAShield"=""
+"Icon"="PowerShell.exe"
+
+[HKEY_CLASSES_ROOT\Directory\Shell\Terminal\Shell\PowerShell\Command]
+@="PowerShell -Command \"Start-Process cmd -ArgumentList '/s,/k,pushd %V && start PowerShell -NoExit && exit' -Verb RunAs\""
+
+[HKEY_CLASSES_ROOT\Directory\Shell\Terminal\Shell\LinuxShell]
+@="LinuxShell"
+"HasLUAShield"=""
+"Icon"="WSL.exe"
+
+[HKEY_CLASSES_ROOT\Directory\Shell\Terminal\Shell\LinuxShell\Command]
+@="wsl.exe --cd \"%V\""
+
+; Directory
+[HKEY_CLASSES_ROOT\Directory\Background\Shell\Terminal]
+"Icon"=""
+"MUIVerb"="Terminal"
+"Extended"=""
+"SubCommands"=""
+
+[HKEY_CLASSES_ROOT\Directory\Background\Shell\Terminal\Shell\CMD]
+@="Command Prompt"
+"HasLUAShield"=""
+"Icon"="imageres.dll,-5323"
+
+[HKEY_CLASSES_ROOT\Directory\Background\Shell\Terminal\Shell\CMD\Command]
+@="cmd /c echo|set/p=\"%V\"|powerShell -NoP -W 1 -NonI -NoL \"SaPs 'cmd' -Args '/c \"\"\"cd /d',$([char]34+$Input+[char]34),'^&^& start /b cmd.exe\"\"\"' -Verb RunAs\""
+
+[HKEY_CLASSES_ROOT\Directory\Background\Shell\Terminal\Shell\PowerShell]
+@="PowerShell"
+"HasLUAShield"=""
+"Icon"="PowerShell.exe"
+
+[HKEY_CLASSES_ROOT\Directory\Background\Shell\Terminal\Shell\PowerShell\Command]
+@="PowerShell -Command \"Start-Process cmd -ArgumentList '/s,/k,pushd %V && start PowerShell -NoExit && exit' -Verb RunAs\""
+
+[HKEY_CLASSES_ROOT\Directory\Background\Shell\Terminal\Shell\LinuxShell]
+@="LinuxShell"
+"HasLUAShield"=""
+"Icon"="WSL.exe"
+
+[HKEY_CLASSES_ROOT\Directory\Background\Shell\Terminal\Shell\LinuxShell\Command]
+@="wsl.exe --cd \"%V\""
+
+; Drive
+[HKEY_CLASSES_ROOT\Drive\Shell\Terminal]
+"Icon"=""
+"MUIVerb"="Terminal"
+"Extended"=""
+"SubCommands"=""
+
+[HKEY_CLASSES_ROOT\Drive\Shell\Terminal\Shell\CMD]
+@="Command Prompt"
+"HasLUAShield"=""
+"Icon"="imageres.dll,-5323"
+
+[HKEY_CLASSES_ROOT\Drive\Shell\Terminal\Shell\CMD\Command]
+@="cmd /c echo|set/p=\"%L\"|powerShell -NoP -W 1 -NonI -NoL \"SaPs 'cmd' -Args '/c \"\"\"cd /d',$([char]34+$Input+[char]34),'^&^& start /b cmd.exe\"\"\"' -Verb RunAs\""
+
+[HKEY_CLASSES_ROOT\Drive\Shell\Terminal\Shell\PowerShell]
+@="PowerShell"
+"HasLUAShield"=""
+"Icon"="PowerShell.exe"
+
+[HKEY_CLASSES_ROOT\Drive\Shell\Terminal\Shell\PowerShell\Command]
+@="PowerShell -Command \"Start-Process cmd -ArgumentList '/s,/k,pushd %V && start PowerShell -NoExit && exit' -Verb RunAs\""
+
+[HKEY_CLASSES_ROOT\Drive\Shell\Terminal\Shell\LinuxShell]
+@="LinuxShell"
+"HasLUAShield"=""
+"Icon"="WSL.exe"
+
+[HKEY_CLASSES_ROOT\Drive\Shell\Terminal\Shell\LinuxShell\Command]
+@="wsl.exe --cd \"%V\""
+
+; Add Hash Value To Shift Right Click
+[HKEY_CLASSES_ROOT\*\Shell\Hash]
+"Icon"=""
+"MUIVerb"="Hash"
+"Extended"=""
+"SubCommands"=""
+
+; MD5
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\01Menu]
+"MUIVerb"="MD5"
+
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\01Menu\Command]
+@="cmd /c echo \\\"%1\\\" | powershell -nop $file=[string]$input; get-filehash -literalpath $file.substring(2,$file.length - 5) -algorithm MD5 ^| format-list; Start-Sleep 3600"
+
+; SHA1
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\02Menu]
+"MUIVerb"="SHA1"
+
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\02Menu\Command]
+@="cmd /c echo \\\"%1\\\" | powershell -nop $file=[string]$input; get-filehash -literalpath $file.substring(2,$file.length - 5) -algorithm SHA1 ^| format-list; Start-Sleep 3600"
+
+; SHA256
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\03Menu]
+"MUIVerb"="SHA256"
+
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\03Menu\Command]
+@="cmd /c echo \\\"%1\\\" | powershell -nop $file=[string]$input; get-filehash -literalpath $file.substring(2,$file.length - 5) -algorithm SHA256 ^| format-list; Start-Sleep 3600"
+
+; SHA384
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\04Menu]
+"MUIVerb"="SHA384"
+
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\04Menu\Command]
+@="cmd /c echo \\\"%1\\\" | powershell -nop $file=[string]$input; get-filehash -literalpath $file.substring(2,$file.length - 5) -algorithm SHA384 ^| format-list; Start-Sleep 3600"
+
+; SHA512
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\05Menu]
+"MUIVerb"="SHA512"
+
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\05Menu\Command]
+@="cmd /c echo \\\"%1\\\" | powershell -nop $file=[string]$input; get-filehash -literalpath $file.substring(2,$file.length - 5) -algorithm SHA512 ^| format-list; Start-Sleep 3600"
+
+; MACTripleDES
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\06Menu]
+"MUIVerb"="MACTripleDES"
+
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\06Menu\Command]
+@="cmd /c echo \\\"%1\\\" | powershell -nop $file=[string]$input; get-filehash -literalpath $file.substring(2,$file.length - 5) -algorithm MACTripleDES ^| format-list; Start-Sleep 3600"
+
+; RIPEMD160
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\07Menu]
+"MUIVerb"="RIPEMD160"
+
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\07Menu\Command]
+@="cmd /c echo \\\"%1\\\" | powershell -nop $file=[string]$input; get-filehash -literalpath $file.substring(2,$file.length - 5) -algorithm RIPEMD160 ^| format-list; Start-Sleep 3600"
+
+; Allget-filehash -literalpath '%1' -algorithm RIPEMD160 | format-list
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\08Menu]
+"CommandFlags"=dword:00000020
+"MUIVerb"="Show all"
+
+[HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\08Menu\Command]
+@="cmd /c echo \\\"%1\\\" | powershell -nop $raw=[string]$input; $file=$raw.substring(2,$raw.length - 5); \\\"Path:`n$file`n\\\"; @(foreach ($a in @('MD5','SHA1','SHA256','SHA384','SHA512','MACTripleDES','RIPEMD160')) { get-filehash -literalpath $file -algorithm $a }) ^| foreach { \\\"$($_.Algorithm):`n$($_.Hash)`n\\\" }; Start-Sleep 3600"
+
+; Turn off SmartScreen
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]
+"EnableSmartScreen"=dword:00000000
+
+; Disable SmartScreen
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer]
+"SmartScreenEnabled"="Off"
+
+; Disable App Install Control
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\SmartScreen]
+"ConfigureAppInstallControlEnabled"=dword:00000000
+
+; Disable Vulnerable Driver Blocklist
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CI\Config]
+"VulnerableDriverBlocklistEnable"=dword:00000000
+
+; Install Store Apps From Anywhere
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer]
+"AicEnabled"="Anywhere"
+
+; Disable Warnings At Opening Files For Publisher
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Associations]
+"LowRiskFileTypes"=".zip;.rar;.nfo;.txt;.exe;.bat;.vbs;.com;.cmd;.reg;.msi;.htm;.html;.gif;.bmp;.jpg;.avi;.mpg;.mpeg;.mov;.mp3;.m3u;.wav;"
+
+; Disable Block From Downloaded Files
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Associations]
+"LowRiskFileTypes"=".zip;.rar;.7z;.wim;.esd;.nfo;.txt;.epub;.mobi;.docx;.xlsx;.pptx;.pdf;.com;.htm;.html;.exe;.msi;.bat;.cmd;.ps1;.vbs;.reg;.psd;.psb;.ai;.dwg;.dxf;.obj;.fbx;.blend;.dae;.skp;.3ds;.3dm;.gh;.max;.rvt;.rdc;.gha;.wfp;.raw;.tif;.tiff;.webp;.gif;.bmp;.png;.hevc;.heic;.heif;.jpg;.jpeg;.avi;.mp4;.mpg;.mpeg;.mov;.mkv;.mp3;.m3u;.wav;"
+"DefaultFileTypeRisk"=dword:00006152
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments]
+"SaveZoneInformation"=dword:00000001
+
+; Disable Windows Security Virus and Thread Protection Non Critical Notifications
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Notifications]
+"DisableEnhancedNotifications"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender Security Center\Notifications]
+"DisableNotifications"=-
+
+; Disable Windows Security Account Protection Notifications
+[HKEY_CURRENT_USER\Software\Microsoft\Windows Defender Security Center\Account protection]
+"DisableNotifications"=dword:00000001
+"DisableWindowsHelloNotifications"=dword:00000001
+"DisableDynamiclockNotifications"=dword:00000001
+
+; Disable Windows Security Firewall Notifications
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\DomainProfile]
+"DisableNotifications"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\PublicProfile]
+"DisableNotifications"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\StandardProfile]
+"DisableNotifications"=dword:00000001
+
+; Allow Share On Lan Tweaks
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters]
+"AllowInsecureGuestAuth"=dword:00000001
+
+; Allow Log-In Without Typing Password
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\PasswordLess\Device]
+"DevicePasswordLessBuildVersion"=dword:00000000
+
+; Edit Region
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Control Panel\DeviceRegion]
+"DeviceRegion"=dword:00000244
+
+[HKEY_USERS\.DEFAULT\Control Panel\International\Geo]
+"Nation"="244"
+"Name"="US"
+
+; Enable Sudo
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Sudo]
+"Enabled"=dword:00000003
+
+; Allow Double Clicking To PS1 Files
+[HKEY_CLASSES_ROOT\Applications\powershell.exe\shell\open\command]
+@="\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -Command \"& '%1' | Out-String -Width 9999\""
+
+[HKEY_CLASSES_ROOT\.ps1]
+@="Microsoft.PowerShellScript.1"
+
+[HKEY_CLASSES_ROOT\Microsoft.PowerShellScript.1\Shell\Open\Command]
+@="\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -Command \"& '%1' | Out-String -Width 9999\""
+
+; Disable Search WebView Usage
+[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\FeatureManagement\Overrides\8\1694661260]
+"EnabledState"=dword:00000001
+"EnabledStateOptions"=dword:00000000
+"Variant"=dword:00000000
+"VariantPayload"=dword:00000000
+"VariantPayloadKind"=dword:00000000
+
+; Enable Game Mode
+[HKEY_CURRENT_USER\Software\Microsoft\GameBar]
+"AutoGameModeEnabled"=dword:00000001
+
+; Enable Windowed Optimizations - Enable Variable Refresh Rate - Disable AutoHDR
+[HKEY_CURRENT_USER\Software\Microsoft\DirectX\GraphicsSettings]
+"SwapEffectUpgradeCache"=dword:00000001
+
+[HKEY_CURRENT_USER\Software\Microsoft\DirectX\UserGpuPreferences]
+"DirectXUserGlobalSettings"="VRROptimizeEnable=1;AutoHDREnable=0;SwapEffectUpgradeEnable=1;"
+
+; Enable Fullscreen Optimizations
+[HKEY_CURRENT_USER\System\GameConfigStore]
+"GameDVR_Enabled"=dword:00000000
+"GameDVR_FSEBehaviorMode"=dword:00000000
+"GameDVR_HonorUserFSEBehaviorMode"=dword:00000000
+"GameDVR_DXGIHonorFSEWindowsCompatible"=dword:00000000
+"GameDVR_EFSEFeatureFlags"=dword:00000000
+
+; Enable Capture
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR]
+"AllowGameDVR"=-
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR]
+"value"=dword:00000001
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR]
+"AppCaptureEnabled"=dword:00000000
+
+; Set Capture Lenght To 30 Min
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR]
+"MaximumRecordLength"=hex(b):00,34,e2,30,04,00,00,00
+
+; Set Capture Quality To 60 FPS
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR]
+"VideoEncodingFrameRateMode"=dword:00000001
+
+; Set Capture Quality To High
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR]
+"VideoEncodingBitrateMode"=dword:00000001
+
+; Turn On Capture Audio And Mute System And App Audio
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR]
+"AudioCaptureEnabled"=dword:00000001
+"EnablePerAppAudio"=dword:00000001
+
+; Turn On Historical Capture For 30 Secconds
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR]
+"HistoricalCaptureEnabled"=dword:00000001
+
+; Disable Windows Spotlight on Desktop Background
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\CloudContent]
+"DisableSpotlightCollectionOnDesktop"=dword:00000001
+"DisableWindowsSpotlightFeatures"=-
+
+; Increase Wallpaper Quality
+[HKEY_CURRENT_USER\Control Panel\Desktop]
+"JPEGImportQuality"=dword:00000064
+
+; Check "Do This For All Current Items" in File Conflict Dialog
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager]
+"ConfirmationCheckBoxDoForAll"=dword:00000001
+
+; Disable Font Blocking
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\MitigationOptions]
+"MitigationOptions_FontBocking"=-
+
+; Disable System Restore
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore]
+"DisableSR"=dword:00000001
+
+; Disable Pick Up Where You Left Off
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
+"DisableAutomaticRestartSignOn"=dword:00000001
+
+; Disable 7GB Reserved Update Space
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\ReserveManager]
+"ShippedWithReserves"=dword:00000000
+
+; Disable Sync Provider Notification In File Explorer
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"ShowSyncProviderNotifications"=dword:00000000
+
+; Disable Recommended Section From Start Menu
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer]
+"HideRecommendedSection"=-
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
+"HideRecommendedSection"=dword:00000001
+
+; Enable Network Shared Printer
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC]
+"RpcUseNamedPipeProtocol"=dword:00000001
+"RpcProtocols"=dword:00000007
+"ForceKerberosForRpc"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Print]
+"RpcAuthnLevelPrivacyEnabled"=dword:00000000
+
+; Enable Long Path Support
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem]
+"LongPathsEnabled"=dword:00000001
+
+; Disable Emoji
+[HKEY_CURRENT_USER\Software\Microsoft\TabletTip\1.7]
+"EmojiAndMoreIconVisibilityState"=dword:00000000
+
+; Disable Resume
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CrossDeviceResume\Configuration]
+"IsResumeAllowed"=dword:00000000
+
+; Disable Recall Snapshots Feature
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\WindowsAI]
+"DisableAIDataAnalysis"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsAI]
+"DisableAIDataAnalysis"=dword:00000001
+
+; Disable Copilot
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\WindowsCopilot]
+"TurnOffWindowsCopilot"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot]
+"TurnOffWindowsCopilot"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
+"HubsSidebarEnabled"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer]
+"DisableSearchBoxSuggestions"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
+"DisableSearchBoxSuggestions"=dword:00000001
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"ShowCopilotButton"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings]
+"AutoOpenCopilotLargeScreens"=dword:00000000
+
+; Enable Windows Script Host
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Script Host\Settings]
+"Enabled"=dword:00000001
+
+; Disable Microsoft Edge Tabs At Alt Tab
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"MultiTaskingAltTabFilter"=dword:00000003
+
+; Turn Off Error Reporting
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting]
+"Disabled"=dword:00000001
+
+; Narrator Shortcut
+[HKEY_CURRENT_USER\Software\Microsoft\Narrator\NoRoam]
+"WinEnterLaunchEnabled"=dword:00000000
+
+; Enable This PC To Access Mobile Devices
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Mobility]
+"CrossDeviceEnabled"=dword:00000001
+
+; Enable Shake To Minimize Windows
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"DisallowShaking"=dword:00000000
+
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer]
+"NoWindowMinimizingShortcuts"=-
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
+"NoWindowMinimizingShortcuts"=-
+
+; Enable Classic Search, Disable Enhanced Search
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Search\Gather\Windows\SystemIndex]
+"EnableFindMyFiles"=dword:00000000
+
+; Respect Power Modes For Search Indexer Performance
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Search\Gather\Windows\SystemIndex]
+"RespectPowerModes"=dword:00000001
+
+; Disable Get Fun Facts Tips, Tricks and More on Lock Screen
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager]
+"RotatingLockScreenOverlayEnabled"=dword:00000000
+"SubscribedContent-338387Enabled"=dword:00000000
+
+; Disable Location Services
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location]
+"Value"="Deny"
+
+; Disable Location Allow Override
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CPSS\Store\UserLocationOverridePrivacySetting]
+"Value"=dword:00000000
+
+; Disable Let Apps Access Your Location
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location]
+"Value"="Deny"
+
+; Disable Notify When Apps Request Location
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location]
+"ShowGlobalPrompts"=dword:00000000
+
+; Disable Get Tips and Suggestions When Using Windows
+"SubscribedContent-338389Enabled"=dword:00000000
+
+; Disable Suggested Content In Settings App
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager]
+"SubscribedContent-338393Enabled"=dword:00000000
+"SubscribedContent-353694Enabled"=dword:00000000
+"SubscribedContent-353696Enabled"=dword:00000000
+
+; Disable Lets Finish Setting Up Your Device
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\UserProfileEngagement]
+"ScoobeSystemSettingEnabled"=dword:00000000
+
+; Disable Windows Welcome Experience
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager]
+"SubscribedContent-310093Enabled"=dword:00000000
+
+; Disable Inking and Typing
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CPSS\Store\ImproveInkingAndTyping]
+"Value"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\Microsoft\Input\TIPC]
+"Enabled"=dword:00000000
+
+; Disable Speech Logging
+[HKEY_CURRENT_USER\Software\Microsoft\Speech_OneCore\Settings\OnlineSpeechLogging]
+"LoggingAllowed"=dword:00000000
+
+; Disable Advertising ID
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo]
+"Enabled"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo]
+"DisabledByGroupPolicy"=dword:00000001
+
+; Disable Tailored Experiences
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Privacy]
+"TailoredExperiencesWithDiagnosticDataEnabled"=dword:00000000
+
+; Disable "Show Recommendations For Tips, Shortcuts, New Apps, and More" on Start Menu
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"Start_IrisRecommendations"=dword:00000000
+
+; Disable Show Microsoft Account-Related Notifications on Start Menu
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"Start_AccountNotifications"=dword:00000000
+
+; Disable Dot Net and Powershell Telemetry
+[HKEY_CURRENT_USER\Environment]
+"DOTNET_CLI_TELEMETRY_OPTOUT"="1"
+"POWERSHELL_TELEMETRY_OPTOUT"="1"
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment]
+"DOTNET_CLI_TELEMETRY_OPTOUT"="1"
+"POWERSHELL_TELEMETRY_OPTOUT"="1"
+
+; Disable Required Diagnostic Data
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack]
+"ShowedToastAtLevel"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection]
+"AllowTelemetry"=dword:00000001
+"MaxTelemetryAllowed"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DataCollection]
+"AllowTelemetry"=dword:00000000
+
+; Disable Showing Cloud Results In Search
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search]
+"AllowCloudSearch"=dword:00000000
+"DisableWebSearch"=dword:00000001
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings]
+"IsMSACloudSearchEnabled"=dword:00000000
+"IsAADCloudSearchEnabled"=dword:00000000
+
+; Turn Off Safe Search
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\SearchSettings]
+"SafeSearchMode"=dword:00000000
+
+; Turn Off Web Search by Policy
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer]
+"DisableSearchBoxSuggestions"=dword:00000001
+
+; Turn Off Bing Search by User Settings
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Search]
+"BingSearchEnabled"=dword:00000000
+"AllowSearchToUseLocation"=dword:00000000
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\CurrentVersion\Search]
+"BingSearchEnabled"=dword:00000000
+
+; Hide News And Interests Weather
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds]
+"EnableFeeds"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Feeds]
+"ShellFeedsTaskbarViewMode"=dword:00000002
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Feeds]
+"ShellFeedsTaskbarOpenOnHover"=dword:00000000
+
+; Hide Widgets & Chat
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"TaskbarDa"=dword:00000000
+“TaskbarMn”=dword:00000000
+
+; Enable Clipboard History
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]
+"AllowClipboardHistory"=-
+
+; Disable Feedback Notifications
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DataCollection]
+"DoNotShowFeedbackNotifications"=dword:00000001
+
+; Set Notepad Default To ANSI
+[HKEY_CURRENT_USER\Software\Microsoft\Notepad]
+"iDefaultEncoding"=dword:00000001
+
+; Turn Off Sticky Keys
+[HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys]
+"Flags"="26"
+
+; Turn On Use Print Screen Key To Launch Screen Snipping
+[HKEY_CURRENT_USER\Control Panel\Keyboard]
+"PrintScreenKeyForSnippingEnabled"=dword:00000001
+
+; Enable Developer Mode
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock]
+"AllowDevelopmentWithoutDevLicense"=dword:00000001
+"AllowAllTrustedApps"=dword:00000001
+
+; Turn On End Task in Taskbar By Right Click
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings]
+"TaskbarEndTask"=dword:00000001
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\DeveloperSettings]
+"TaskbarEndTask"=dword:00000001 
+
+; Disable Power Throttling
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling]
+"PowerThrottlingOff"=dword:00000001
+
+; Faster Turn On
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize]
+"StartupDelayInMSec"=dword:00000000
+
+; Faster Turn Off
+[HKEY_USERS\.DEFAULT\Control Panel\Desktop]
+"AutoEndTasks"="1"
+"HungAppTimeout"="1000"
+"MenuShowDelay"="100"
+"WaitToKillAppTimeout"="1000"
+"LowLevelHooksTimeout"="1000"
+
+[HKEY_CURRENT_USER\Control Panel\Desktop]
+"AutoEndTasks"="1"
+"HungAppTimeout"="1000"
+"MenuShowDelay"="100"
+"WaitToKillAppTimeout"="1000"
+"LowLevelHooksTimeout"="1000"
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control]
+"WaitToKillServiceTimeout"="1000"
+
+; Improve General Responsiveness
+[HKEY_CURRENT_USER\Control Panel\Mouse]
+"MouseHoverTime"="300"
+
+; Disable Mouse Acceleration
+[HKEY_CURRENT_USER\Control Panel\Mouse]
+"MouseSpeed"="0"
+"MouseThreshold1"="0"
+"MouseThreshold2"="0"
+
+; Remove Previous Versions From Properties
+[-HKEY_CLASSES_ROOT\AllFilesystemObjects\shellex\PropertySheetHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
+[-HKEY_CLASSES_ROOT\CLSID\{450D8FBA-AD25-11D0-98A8-0800361B1103}\shellex\PropertySheetHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
+[-HKEY_CLASSES_ROOT\Directory\shellex\PropertySheetHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
+[-HKEY_CLASSES_ROOT\Drive\shellex\PropertySheetHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
+
+; Remove Previous Versions From Context Menu
+[-HKEY_CLASSES_ROOT\AllFilesystemObjects\shellex\ContextMenuHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
+[-HKEY_CLASSES_ROOT\CLSID\{450D8FBA-AD25-11D0-98A8-0800361B1103}\shellex\ContextMenuHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
+[-HKEY_CLASSES_ROOT\Directory\shellex\ContextMenuHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
+[-HKEY_CLASSES_ROOT\Drive\shellex\ContextMenuHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
+
+; Remove Troubleshoot Compatibility From Context Menu
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked]
+"{1d27f844-3a1f-4410-85ac-14651078412d}"=""
+
+; Remove Include In Library From Context Menu
+[-HKEY_CLASSES_ROOT\Folder\ShellEx\ContextMenuHandlers\Library Location]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Folder\ShellEx\ContextMenuHandlers\Library Location]
+
+; Remove Run As Different User From Context Menu
+[-HKEY_CLASSES_ROOT\exefile\shell\runasuser]
+[-HKEY_CLASSES_ROOT\batfile\shell\runasuser]
+[-HKEY_CLASSES_ROOT\cmdfile\shell\runasuser]
+[-HKEY_CLASSES_ROOT\mscfile\shell\runasuser]
+[-HKEY_CLASSES_ROOT\Msi.Package\shell\runasuser]
+
+; Remove Run As Different User From Start Menu
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer]
+"ShowRunAsDifferentUserInStart"=-
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
+"ShowRunasDifferentuserinStart"=-
+
+; Remove Previous Versions Clear Any Policies
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"NoPreviousVersionsPage"=-
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer]
+"NoPreviousVersionsPage"=-
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\PreviousVersions]
+"DisableLocalPage"=-
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"NoPreviousVersionsPage"=-
+
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\PreviousVersions]
+"DisableLocalPage"=-
+
+; Disable Shortcut Icon
+[HKEY_CLASSES_ROOT\IE.AssocFile.URL]
+"IsShortcut"=""
+
+[HKEY_CLASSES_ROOT\InternetShortcut]
+"IsShortcut"=""
+
+[HKEY_CLASSES_ROOT\lnkfile]
+"IsShortcut"=""
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer]
+"29"="C:\\Windows\\ICO.ico"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons]
+"29"="C:\\Windows\\ICO.ico"
+
+; Disable Shortcut Text
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer]
+"link"=hex:00,00,00,00
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates]
+"ShortcutNameTemplate"=-
+
+; Add Show/Hide Gallery to Folder Options
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\NavPane\ShowGallery]
+"CheckedValue"=dword:00000001
+"DefaultValue"=dword:00000001
+"HKeyRoot"=dword:80000001
+"Id"=dword:0000000d
+"RegPath"="Software\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}"
+"Text"="Show Gallery"
+"Type"="checkbox"
+"UncheckedValue"=dword:00000000
+"ValueName"="System.IsPinnedToNameSpaceTree"
+
+; Add Show/Hide Home to Folder Options
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\NavPane\ShowHome]
+"CheckedValue"=dword:00000001
+"DefaultValue"=dword:00000001
+"HKeyRoot"=dword:80000001
+"Id"=dword:0000000d
+"RegPath"="Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}"
+"Text"="Show Home"
+"Type"="checkbox"
+"UncheckedValue"=dword:00000000
+"ValueName"="System.IsPinnedToNameSpaceTree"
+
+; Launch To This PC
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"LaunchTo"=dword:00000001
+
+; Remove Dublicate Drives
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\DelegateFolders\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\DelegateFolders\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}]
+
+; Hide Network From Navigation Pane
+[HKEY_CURRENT_USER\Software\Classes\CLSID\{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}]
+"System.IsPinnedToNameSpaceTree"=dword:00000000
+
+; Hide Gallery From Navigation Pane
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}]
+@="Gallery"
+"HiddenByDefault"=dword:00000001
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\NonEnum]
+"{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}"=dword:00000001
+
+; Hide Home From Navigation Pane
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}]
+@="CLSID_MSGraphHomeFolder"
+"HiddenByDefault"=dword:00000001
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}]
+
+; Turn Off Show Recommended Section in File Explorer Home
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"ShowRecommendations"=dword:00000000
+
+; Remove Dev Home
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsUpdate\Orchestrator\UScheduler_Oobe\DevHomeUpdate]
+
+; Remove Outlook for Windows
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsUpdate\Orchestrator\UScheduler_Oobe\OutlookUpdate]
+
+; Set Downloads Grouping To None
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes\{885a186e-a440-4ada-812b-db871b942259}\TopViews\{00000000-0000-0000-0000-000000000000}]
+"ColumnList"="prop:0(34)System.ItemNameDisplay;0System.DateModified;0System.ItemTypeText;0System.Size;1System.DateCreated;1System.Author;1System.Category;1System.Keywords;1System.Title"
+"GroupAscending"=dword:00000000
+"GroupBy"="System.Null"
+"LogicalViewMode"=dword:00000001
+"Name"="NoName"
+"Order"=dword:00000000
+"PrimaryProperty"="prop:System.ItemNameDisplay"
+"SortByList"="prop:System.ItemNameDisplay" 
+
+; Hide Recent Files In Quick Access
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"ShowRecent"=dword:00000000
+
+; Hide Frequent Files In Quick Access
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"ShowFrequent"=dword:00000000
+
+; Hide Cloud Files In Quick Access
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"ShowCloudFilesInQuickAccess"=dword:00000000
+
+; Show More Details In File Transfer
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager]
+"EnthusiastMode"=dword:00000001
+
+; Start Show More Pins
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"Start_Layout"=dword:00000001
+
+; Start Last Actions
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"TaskbarAnimations"=dword:00000001
+"Start_TrackProgs"=dword:00000001
+"Start_TrackDocs"=dword:00000000
+
+; Turn Off DND (Do Not Disturb)
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\$$windows.data.notifications.quiethourssettings\Current]
+"Data"=hex(3):02,00,00,00,B4,67,2B,68,F0,0B,D8,01,00,00,00,00,43,42,01,00,\
+C2,0A,01,D2,14,28,4D,00,69,00,63,00,72,00,6F,00,73,00,6F,00,66,00,74,00,2E,\
+00,51,00,75,00,69,00,65,00,74,00,48,00,6F,00,75,00,72,00,73,00,50,00,72,00,\
+6F,00,66,00,69,00,6C,00,65,00,2E,00,55,00,6E,00,72,00,65,00,73,00,74,00,72,\
+00,69,00,63,00,74,00,65,00,64,00,CA,28,D0,14,02,00,00
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\$quietmomentfullscreen$windows.data.notifications.quietmoment\Current]
+"Data"=hex(3):02,00,00,00,97,1D,2D,68,F0,0B,D8,01,00,00,00,00,43,42,01,00,\
+C2,0A,01,D2,1E,26,4D,00,69,00,63,00,72,00,6F,00,73,00,6F,00,66,00,74,00,2E,\
+00,51,00,75,00,69,00,65,00,74,00,48,00,6F,00,75,00,72,00,73,00,50,00,72,00,\
+6F,00,66,00,69,00,6C,00,65,00,2E,00,41,00,6C,00,61,00,72,00,6D,00,73,00,4F,\
+00,6E,00,6C,00,79,00,C2,28,01,CA,50,00,00
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\$quietmomentgame$windows.data.notifications.quietmoment\Current]
+"Data"=hex(3):02,00,00,00,6C,39,2D,68,F0,0B,D8,01,00,00,00,00,43,42,01,00,\
+C2,0A,01,D2,1E,28,4D,00,69,00,63,00,72,00,6F,00,73,00,6F,00,66,00,74,00,2E,\
+00,51,00,75,00,69,00,65,00,74,00,48,00,6F,00,75,00,72,00,73,00,50,00,72,00,\
+6F,00,66,00,69,00,6C,00,65,00,2E,00,50,00,72,00,69,00,6F,00,72,00,69,00,74,\
+00,79,00,4F,00,6E,00,6C,00,79,00,C2,28,01,CA,50,00,00
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\$quietmomentpostoobe$windows.data.notifications.quietmoment\Current]
+"Data"=hex(3):02,00,00,00,06,54,2D,68,F0,0B,D8,01,00,00,00,00,43,42,01,00,\
+C2,0A,01,D2,1E,28,4D,00,69,00,63,00,72,00,6F,00,73,00,6F,00,66,00,74,00,2E,\
+00,51,00,75,00,69,00,65,00,74,00,48,00,6F,00,75,00,72,00,73,00,50,00,72,00,\
+6F,00,66,00,69,00,6C,00,65,00,2E,00,50,00,72,00,69,00,6F,00,72,00,69,00,74,\
+00,79,00,4F,00,6E,00,6C,00,79,00,C2,28,01,CA,50,00,00
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\$quietmomentpresentation$windows.data.notifications.quietmoment\Current]
+"Data"=hex(3):02,00,00,00,83,6E,2D,68,F0,0B,D8,01,00,00,00,00,43,42,01,00,\
+C2,0A,01,D2,1E,26,4D,00,69,00,63,00,72,00,6F,00,73,00,6F,00,66,00,74,00,2E,\
+00,51,00,75,00,69,00,65,00,74,00,48,00,6F,00,75,00,72,00,73,00,50,00,72,00,\
+6F,00,66,00,69,00,6C,00,65,00,2E,00,41,00,6C,00,61,00,72,00,6D,00,73,00,4F,\
+00,6E,00,6C,00,79,00,C2,28,01,CA,50,00,00
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\$quietmomentscheduled$windows.data.notifications.quietmoment\Current]
+"Data"=hex(3):02,00,00,00,2E,8A,2D,68,F0,0B,D8,01,00,00,00,00,43,42,01,00,\
+C2,0A,01,D2,1E,28,4D,00,69,00,63,00,72,00,6F,00,73,00,6F,00,66,00,74,00,2E,\
+00,51,00,75,00,69,00,65,00,74,00,48,00,6F,00,75,00,72,00,73,00,50,00,72,00,\
+6F,00,66,00,69,00,6C,00,65,00,2E,00,50,00,72,00,69,00,6F,00,72,00,69,00,74,\
+00,79,00,4F,00,6E,00,6C,00,79,00,C2,28,01,D1,32,80,E0,AA,8A,99,30,D1,3C,80,\
+E0,F6,C5,D5,0E,CA,50,00,00
+
+; Hide Folders From This PC
+; 3D Objects
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}]
+
+; Desktop
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}]
+
+; Documents
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{A8CDFF1C-4878-43be-B5FD-F8091C1C60D0}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{d3162b92-9365-467a-956b-92703aca08af}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{A8CDFF1C-4878-43be-B5FD-F8091C1C60D0}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{d3162b92-9365-467a-956b-92703aca08af}]
+
+; Downloads
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{374DE290-123F-4565-9164-39C4925E467B}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{088e3905-0323-4b02-9826-5d99428e115f}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{374DE290-123F-4565-9164-39C4925E467B}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{088e3905-0323-4b02-9826-5d99428e115f}]
+
+; Music
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{1CF1260C-4DD0-4ebb-811F-33C572699FDE}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{3dfdf296-dbec-4fb4-81d1-6a3438bcf4de}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{1CF1260C-4DD0-4ebb-811F-33C572699FDE}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{3dfdf296-dbec-4fb4-81d1-6a3438bcf4de}]
+
+; Pictures
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{3ADD1653-EB32-4cb0-BBD7-DFA0ABB5ACCA}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{24ad3ad4-a569-4530-98e1-ab02f9417aa8}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{3ADD1653-EB32-4cb0-BBD7-DFA0ABB5ACCA}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{24ad3ad4-a569-4530-98e1-ab02f9417aa8}]
+
+; Videos
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{A0953C92-50DC-43bf-BE83-3742FED03C9C}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{A0953C92-50DC-43bf-BE83-3742FED03C9C}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}]
+
+; DeProvision
+; Reserved - [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.SecHealthUI_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsFeedbackHub_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.GetHelp_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Getstarted_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MicrosoftEdgeDevToolsClient_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MicrosoftEdge_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MicrosoftEdge.Stable_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\MicrosoftTeams_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.BingNews_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.BingWeather_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.ZuneMusic_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.ZuneVideo_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Print3D_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.3DBuilder_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Microsoft3DViewer_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MicrosoftOfficeHub_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Office.OneNote_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.OneConnect_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.OneDriveSync_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.People_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.PeopleExperienceHost_cw5n1h2txyewy]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.ParentalControls_cw5n1h2txyewy]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.SkypeApp_kzf8qxf38zg5c]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\4DF9E0F8.Netflix_mcm4njqhnhss8]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\AmazonVideo.PrimeVideo_pwbj9vvecjh7j]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MicrosoftSolitaireCollection_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MicrosoftStickyNotes_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Todos_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.YourPhone_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.PowerAutomateDesktop_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Windows.Photos_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsAlarms_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsCalculator_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsCamera_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsMaps_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsSoundRecorder_8wekyb3d8bbwe]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Messaging_8wekyb3d8bbwe]
+
+; GPU Material Error Fix - Enable Hardware Accelerated GPU Scheduling
+[HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\GraphicsDrivers]
+"TdrLevel"=dword:00000000
+"TdrDelay"=dword:00000064
+"HwSchMode"=dword:0000002
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers]
+"TdrLevel"=dword:00000000
+"TdrDelay"=dword:00000064
+"HwSchMode"=dword:00000002
+
+; Disable AMD Context Menu
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked]
+"{FDADFEE3-02D1-4E7C-A511-380F4C98D73B}"=""
+
+; Disable Nvidia Context Menu
+[HKEY_CURRENT_USER\Software\NVIDIA Corporation\Global\NvCplApi\Policies]
+"ContextUIPolicy"=dword:00000000
+
+; Disable Intel Context Menu
+[-HKEY_CLASSES_ROOT\Directory\Background\shellex\ContextMenuHandlers\igfxcui]
+[-HKEY_CLASSES_ROOT\Directory\Background\shellex\ContextMenuHandlers\igfxDTCM]
+
+; Force .Net Latest Version
+; [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment]
+; "DOTNET_ROLL_FORWARD"="LatestMajor"
+; [HKEY_CURRENT_USER\Environment]
+; "DOTNET_ROLL_FORWARD"="LatestMajor"
