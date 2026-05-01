@@ -144,7 +144,7 @@
 ; [HKEY_CLASSES_ROOT\Directory\background\shell\extract\command]
 ; @="C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -win 1 -nop -c iex((10..40|%%{(gp 'Registry::HKCR\\RunAsTI' $_ -ea 0).$_})-join[char]10); # --%% cmd /c pushd \"%V\" & start \"RunAsTI\" %%wt%%"
 
-; RunAsTI function
+; RunAsTI Function
 [HKEY_CLASSES_ROOT\RunAsTI]
 "10"="function RunAsTI ($cmd,$arg) { $id='RunAsTI'; $key=\"Registry::HKU\\$(((whoami /user)-split' ')[-1])\\Volatile Environment\"; $code=@'"
 "11"=" $I=[int32]; $M=$I.module.gettype(\"System.Runtime.Interop`Services.Mar`shal\"); $P=$I.module.gettype(\"System.Int`Ptr\"); $S=[string]"
@@ -179,7 +179,7 @@
 "40"="}; $A=,([environment]::commandline-split'-[-]%+ ?',2)[1]-split'\"([^\"]+)\"|([^ ]+)',2|%{$_.Trim(' \"')}; RunAsTI $A[1] $A[2]; # AveYo, 2023.07.06"
 ;
 
-; Take Ownership
+; Take Ownership (Files)
 [HKEY_CLASSES_ROOT\*\Shell\Ownership]
 @="Ownership"
 "Icon"="imageres.dll,-88"
@@ -189,9 +189,10 @@
 "NoWorkingDirectory"=""
 
 [HKEY_CLASSES_ROOT\*\Shell\Ownership\Command]
-@="powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l' -Verb runAs\""
-"IsolatedCommand"= "powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l' -Verb runAs\""
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged cmd.exe /c takeown /f \"%1\" && icacls \"%1\" /grant *S-1-3-4:F /t /c /l"
+"IsolatedCommand"="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged cmd.exe /c takeown /f \"%1\" && icacls \"%1\" /grant *S-1-3-4:F /t /c /l"
 
+; Take Ownership (Folders)
 [HKEY_CLASSES_ROOT\Directory\Shell\Ownership]
 @="Ownership"
 "Icon"="imageres.dll,-88"
@@ -202,9 +203,10 @@
 "AppliesTo"="NOT (System.ItemPathDisplay:=\"C:\\Users\" OR System.ItemPathDisplay:=\"C:\\ProgramData\" OR System.ItemPathDisplay:=\"C:\\Windows\" OR System.ItemPathDisplay:=\"C:\\Windows\\System32\" OR System.ItemPathDisplay:=\"C:\\Program Files\" OR System.ItemPathDisplay:=\"C:\\Program Files (x86)\")"
 
 [HKEY_CLASSES_ROOT\Directory\Shell\Ownership\Command]
-@="powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" /r /d y && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l /q' -Verb runAs\""
-"IsolatedCommand"="powershell -windowstyle hidden -command \"Start-Process cmd -ArgumentList '/c takeown /f \\\"%1\\\" /r /d y && icacls \\\"%1\\\" /grant *S-1-3-4:F /t /c /l /q' -Verb runAs\""
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged cmd.exe /c takeown /f \"%1\" /r /d y && icacls \"%1\" /grant *S-1-3-4:F /t /c /l /q"
+"IsolatedCommand"="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged cmd.exe /c takeown /f \"%1\" /r /d y && icacls \"%1\" /grant *S-1-3-4:F /t /c /l /q"
 
+; Take Ownership (Drives Except System)
 [HKEY_CLASSES_ROOT\Drive\Shell\Runas]
 @="Ownership"
 "Icon"="imageres.dll,-88"
@@ -215,8 +217,8 @@
 "AppliesTo"="NOT (System.ItemPathDisplay:=\"C:\\\")"
 
 [HKEY_CLASSES_ROOT\Drive\shell\runas\command]
-@="cmd.exe /c takeown /f \"%1\\\" /r /d y && icacls \"%1\\\" /grant *S-1-3-4:F /t /c"
-"IsolatedCommand"="cmd.exe /c takeown /f \"%1\\\" /r /d y && icacls \"%1\\\" /grant *S-1-3-4:F /t /c"
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged cmd.exe /c takeown /f \"%1\\\" /r /d y && icacls \"%1\\\" /grant *S-1-3-4:F /t /c"
+"IsolatedCommand"="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged cmd.exe /c takeown /f \"%1\\\" /r /d y && icacls \"%1\\\" /grant *S-1-3-4:F /t /c"
 
 ; To Allow Mapped Drives To Be Available In Elevated PowerShell
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
@@ -339,7 +341,7 @@
 "Icon"="imageres.dll,-5323"
 
 [HKEY_CLASSES_ROOT\DesktopBackground\Shell\Terminal\Shell\CMD\Command]
-@="cmd /c echo|set/p=\"%V\"|powerShell -NoP -W 1 -NonI -NoL \"SaPs 'cmd' -Args '/c \"\"\"cd /d',$([char]34+$Input+[char]34),'^&^& start /b cmd.exe\"\"\"' -Verb RunAs\""
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged cmd.exe /k cd /d \"%V\""
 
 [HKEY_CLASSES_ROOT\DesktopBackground\Shell\Terminal\Shell\PowerShell]
 @="PowerShell"
@@ -347,7 +349,7 @@
 "Icon"="PowerShell.exe"
 
 [HKEY_CLASSES_ROOT\DesktopBackground\Shell\Terminal\Shell\PowerShell\Command]
-@="PowerShell -Command \"Start-Process cmd -ArgumentList '/s,/k,pushd %V && start PowerShell -NoExit && exit' -Verb RunAs\""
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged powershell.exe -NoExit -Command \"Set-Location -LiteralPath '%V'\""
 
 [HKEY_CLASSES_ROOT\DesktopBackground\Shell\Terminal\Shell\LinuxShell]
 @="LinuxShell"
@@ -355,7 +357,7 @@
 "Icon"="WSL.exe"
 
 [HKEY_CLASSES_ROOT\DesktopBackground\Shell\Terminal\Shell\LinuxShell\Command]
-@="wsl.exe --cd \"%V\""
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged wsl.exe --cd \"%V\""
 
 ; Directory
 [HKEY_CLASSES_ROOT\Directory\Shell\Terminal]
@@ -370,7 +372,7 @@
 "Icon"="imageres.dll,-5323"
 
 [HKEY_CLASSES_ROOT\Directory\Shell\Terminal\Shell\CMD\Command]
-@="cmd /c echo|set/p=\"%L\"|powerShell -NoP -W 1 -NonI -NoL \"SaPs 'cmd' -Args '/c \"\"\"cd /d',$([char]34+$Input+[char]34),'^&^& start /b cmd.exe\"\"\"' -Verb RunAs\""
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged cmd.exe /k cd /d \"%V\""
 
 [HKEY_CLASSES_ROOT\Directory\Shell\Terminal\Shell\PowerShell]
 @="PowerShell"
@@ -378,7 +380,7 @@
 "Icon"="PowerShell.exe"
 
 [HKEY_CLASSES_ROOT\Directory\Shell\Terminal\Shell\PowerShell\Command]
-@="PowerShell -Command \"Start-Process cmd -ArgumentList '/s,/k,pushd %V && start PowerShell -NoExit && exit' -Verb RunAs\""
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged powershell.exe -NoExit -Command \"Set-Location -LiteralPath '%V'\""
 
 [HKEY_CLASSES_ROOT\Directory\Shell\Terminal\Shell\LinuxShell]
 @="LinuxShell"
@@ -386,9 +388,9 @@
 "Icon"="WSL.exe"
 
 [HKEY_CLASSES_ROOT\Directory\Shell\Terminal\Shell\LinuxShell\Command]
-@="wsl.exe --cd \"%V\""
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged wsl.exe --cd \"%V\""
 
-; Directory
+; Directory Background
 [HKEY_CLASSES_ROOT\Directory\Background\Shell\Terminal]
 "Icon"=""
 "MUIVerb"="Terminal"
@@ -401,7 +403,7 @@
 "Icon"="imageres.dll,-5323"
 
 [HKEY_CLASSES_ROOT\Directory\Background\Shell\Terminal\Shell\CMD\Command]
-@="cmd /c echo|set/p=\"%V\"|powerShell -NoP -W 1 -NonI -NoL \"SaPs 'cmd' -Args '/c \"\"\"cd /d',$([char]34+$Input+[char]34),'^&^& start /b cmd.exe\"\"\"' -Verb RunAs\""
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged cmd.exe /k cd /d \"%V\""
 
 [HKEY_CLASSES_ROOT\Directory\Background\Shell\Terminal\Shell\PowerShell]
 @="PowerShell"
@@ -409,7 +411,7 @@
 "Icon"="PowerShell.exe"
 
 [HKEY_CLASSES_ROOT\Directory\Background\Shell\Terminal\Shell\PowerShell\Command]
-@="PowerShell -Command \"Start-Process cmd -ArgumentList '/s,/k,pushd %V && start PowerShell -NoExit && exit' -Verb RunAs\""
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged powershell.exe -NoExit -Command \"Set-Location -LiteralPath '%V'\""
 
 [HKEY_CLASSES_ROOT\Directory\Background\Shell\Terminal\Shell\LinuxShell]
 @="LinuxShell"
@@ -417,7 +419,7 @@
 "Icon"="WSL.exe"
 
 [HKEY_CLASSES_ROOT\Directory\Background\Shell\Terminal\Shell\LinuxShell\Command]
-@="wsl.exe --cd \"%V\""
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged wsl.exe --cd \"%V\""
 
 ; Drive
 [HKEY_CLASSES_ROOT\Drive\Shell\Terminal]
@@ -432,7 +434,7 @@
 "Icon"="imageres.dll,-5323"
 
 [HKEY_CLASSES_ROOT\Drive\Shell\Terminal\Shell\CMD\Command]
-@="cmd /c echo|set/p=\"%L\"|powerShell -NoP -W 1 -NonI -NoL \"SaPs 'cmd' -Args '/c \"\"\"cd /d',$([char]34+$Input+[char]34),'^&^& start /b cmd.exe\"\"\"' -Verb RunAs\""
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged cmd.exe /k cd /d \"%V\""
 
 [HKEY_CLASSES_ROOT\Drive\Shell\Terminal\Shell\PowerShell]
 @="PowerShell"
@@ -440,7 +442,7 @@
 "Icon"="PowerShell.exe"
 
 [HKEY_CLASSES_ROOT\Drive\Shell\Terminal\Shell\PowerShell\Command]
-@="PowerShell -Command \"Start-Process cmd -ArgumentList '/s,/k,pushd %V && start PowerShell -NoExit && exit' -Verb RunAs\""
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged powershell.exe -NoExit -Command \"Set-Location -LiteralPath '%V'\""
 
 [HKEY_CLASSES_ROOT\Drive\Shell\Terminal\Shell\LinuxShell]
 @="LinuxShell"
@@ -448,7 +450,7 @@
 "Icon"="WSL.exe"
 
 [HKEY_CLASSES_ROOT\Drive\Shell\Terminal\Shell\LinuxShell\Command]
-@="wsl.exe --cd \"%V\""
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged wsl.exe --cd \"%V\""
 
 ; Add Hash Value To Shift Right Click
 [HKEY_CLASSES_ROOT\*\Shell\Hash]

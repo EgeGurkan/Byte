@@ -150,7 +150,7 @@ if "%errorlevel%" == "0" goto Connected
 if "%errorlevel%" == "1" goto NotConnected
 :Connected
 :NotConnected
-C:\Byte\Admin.exe -cli regedit.exe /s C:\Byte\Byte.reg >Nul 2>&1
+C:\Byte\Admin.exe --NoLogo --Privileged regedit.exe /s C:\Byte\Byte.reg >Nul 2>&1
 schtasks /Delete /tn "\Microsoft\Windows\Byte\ByteTask" /f >Nul 2>&1
 schtasks /Create /XML C:\Byte\ByteTask.xml /tn "\Microsoft\Windows\Byte\ByteTask" >Nul 2>&1
 
