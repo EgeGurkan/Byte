@@ -129,14 +129,19 @@ DEL /F /S /Q "C:\Windows\System32\OneDriveSetup.exe" >Nul 2>&1
 taskkill /f /im Software_reporter_tool.exe >NUL 2>&1
 icacls "%localappdata%\Google\Software Reporter Tool" /inheritance:e >NUL 2>&1
 icacls "%localappdata%\Google\Chrome\User Data\SwReporter" /inheritance:e >NUL 2>&1
+icacls "%localappdata%\Google\Chrome\User Data\OptGuideOnDeviceModel" /inheritance:e >NUL 2>&1
 @RD /S /Q "%localappdata%\Google\Software Reporter Tool\*" >NUL 2>&1
 del /f /q "%localappdata%\Google\Software Reporter Tool\*" >NUL 2>&1
 @RD /S /Q "%localappdata%\Google\Chrome\User Data\SwReporter\*" >NUL 2>&1
 del /f /q "%localappdata%\Google\Chrome\User Data\SwReporter\*" >NUL 2>&1
+@RD /S /Q "%localappdata%\Google\Chrome\User Data\OptGuideOnDeviceModel\*" >NUL 2>&1
+del /f /q "%localappdata%\Google\Chrome\User Data\OptGuideOnDeviceModel\*" >NUL 2>&1
 mkdir "%localappdata%\Google\Software Reporter Tool" >NUL 2>&1
 mkdir "%localappdata%\Google\Chrome\User Data\SwReporter" >NUL 2>&1
+mkdir "%localappdata%\Google\Chrome\User Data\OptGuideOnDeviceModel" >NUL 2>&1
 icacls "%localappdata%\Google\Software Reporter Tool" /inheritance:r >NUL 2>&1
 icacls "%localappdata%\Google\Chrome\User Data\SwReporter" /inheritance:r >NUL 2>&1
+icacls "%localappdata%\Google\Chrome\User Data\OptGuideOnDeviceModel" /inheritance:r >NUL 2>&1
 
 :: UnRegister Apps
 :: Reserved - SecHealthUI - MicrosoftPowerBIForWindows
