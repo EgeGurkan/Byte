@@ -379,10 +379,6 @@
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\UserProfileEngagement]
 "ScoobeSystemSettingEnabled"=dword:00000000
 
-; Disable Windows Welcome Experience
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager]
-"SubscribedContent-310093Enabled"=dword:00000000
-
 ; Disable Feedback Notifications
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DataCollection]
 "DoNotShowFeedbackNotifications"=dword:00000001
@@ -519,8 +515,15 @@
 "SubscribedContent-353694Enabled"=dword:00000000
 "SubscribedContent-353696Enabled"=dword:00000000
 
+; Disable Start Menu Suggested Apps
+"SubscribedContent-338388Enabled"=dword:00000000
+
 ; Disable Get Tips and Suggestions When Using Windows
 "SubscribedContent-338389Enabled"=dword:00000000
+"SubscribedContent-338392Enabled"=dword:00000000
+
+; Disable Windows Welcome Experience
+"SubscribedContent-310093Enabled"=dword:00000000
 
 ; Disable Get Fun Facts Tips, Tricks and More on Lock Screen
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager]
@@ -563,12 +566,12 @@
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
 "HideRecommendedSection"=dword:00000001
 
-; Disable Show Recenty Added Apps
+; Disable Recommended Websites From Start Menu
 [HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer]
-"HideRecentlyAddedApps"=-
+"HideRecommendedPersonalizedSites"=dword:00000001
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
-"HideRecentlyAddedApps"=dword:00000001
+"HideRecommendedPersonalizedSites"=dword:00000001
 
 ; Turn Off Show Recenty Added Apps
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Start]
@@ -581,31 +584,13 @@
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer]
 "NoStartMenuMorePrograms"=dword:00000001
 
-; Disable Recommended Websites From Start Menu
-[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer]
-"HideRecommendedPersonalizedSites"=dword:00000001
-
-[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
-"HideRecommendedPersonalizedSites"=dword:00000001
-
-; Disable Most Used List From Start Menu
-[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
-"ShowOrHideMostUsedApps"=dword:00000002
-
-[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer]
-"ShowOrHideMostUsedApps"=-
-
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer]
-"NoStartMenuMFUprogramsList"=-
-"NoInstrumentation"=-
-
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer]
-"NoStartMenuMFUprogramsList"=-
-"NoInstrumentation"=-
-
 ; Turn Off Most Used List From Start Menu
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Start]
 "ShowFrequentList"=dword:00000000
+
+; Show All Pins On Start Menu
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Start]
+"ShowAllPinsList"=dword:00000001
 
 ; Remove Dev Home
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsUpdate\Orchestrator\UScheduler_Oobe\DevHomeUpdate]
