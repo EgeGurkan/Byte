@@ -86,7 +86,6 @@
 [HKEY_CURRENT_USER\Control Panel\UnsupportedHardwareNotificationCache]
 "SV1"=dword:00000000
 "SV2"=dword:00000000
-"SV3"=dword:00000000
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
 "HideUnsupportedHardwareNotifications"=dword:00000001
@@ -576,13 +575,6 @@
 ; Turn Off Show Recenty Added Apps
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Start]
 "ShowRecentList"=dword:00000000
-
-; Remove All Apps From Start Menu
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer]
-"NoStartMenuMorePrograms"=-
-
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer]
-"NoStartMenuMorePrograms"=dword:00000001
 
 ; Turn Off Most Used List From Start Menu
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Start]
