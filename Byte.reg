@@ -625,6 +625,18 @@
 "UncheckedValue"=dword:00000000
 "ValueName"="System.IsPinnedToNameSpaceTree"
 
+; Add Show/Hide Linux to Folder Options
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\NavPane\ShowLinux]
+"CheckedValue"=dword:00000001
+"DefaultValue"=dword:00000001
+"HKeyRoot"=dword:80000001
+"Id"=dword:0000000c
+"UncheckedValue"=dword:00000000
+"RegPath"="Software\\Classes\\CLSID\\{B2B4A4D1-2754-4140-A2EB-9A76D9D7CDC6}"
+"Text"="Show Linux"
+"Type"="checkbox"
+"ValueName"="System.IsPinnedToNameSpaceTree"
+
 ; Hide Gallery From Navigation Pane
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}]
 @="Gallery"
@@ -652,6 +664,11 @@
 
 ; Hide Network From Navigation Pane
 [HKEY_CURRENT_USER\Software\Classes\CLSID\{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}]
+"System.IsPinnedToNameSpaceTree"=dword:00000000
+
+; Hide Linux From Navigation Pane
+[HKEY_CURRENT_USER\Software\Classes\CLSID\{B2B4A4D1-2754-4140-A2EB-9A76D9D7CDC6}]
+@="Linux"
 "System.IsPinnedToNameSpaceTree"=dword:00000000
 
 ; Hide Recent Files In Quick Access
