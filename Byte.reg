@@ -1069,6 +1069,11 @@
 [-HKEY_CLASSES_ROOT\Drive\shell\PowerShell]
 [-HKEY_CLASSES_ROOT\LibraryFolder\Background\shell\PowerShell]
 
+; Remove Open Linux Shell Here From Right Click Context Menu
+[-HKEY_CLASSES_ROOT\Directory\background\shell\WSL]
+[-HKEY_CLASSES_ROOT\Drive\shell\WSL]
+[-HKEY_CLASSES_ROOT\Directory\shell\WSL]
+
 ; Add Hash Value To Shift Right Click
 [HKEY_CLASSES_ROOT\*\Shell\Hash]
 "Icon"="imageres.dll,-198"
