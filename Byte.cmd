@@ -1,12 +1,12 @@
 :: Starting Parameters
-@echo off & bgcolor(a) & chcp 1254 & mode con: cols=55 lines=9 & title Byte & cls
+@echo off & chcp 1254 & mode con: cols=55 lines=9 & title Byte & cls
 
 :: Run As Administrator
 >nul reg add hkcu\Software\classes\.Admin\shell\runas\command /f /ve /d "cmd /x /d /r set \"f0=%%2\" &call \"%%2\" %%3" &set _= %*
 >nul fltmc || if "%f0%" neq "%~f0" ( cd.>"%tmp%\runas.Admin" &start "%~n0" /high "%tmp%\runas.Admin" "%~f0" "%_:"=""%" &exit /b )
 
 :: Stop Ads From MS
->nul powershell -Command "Get-AppxPackage *Microsoft.WindowsStore* | Reset-AppxPackage"
+:: >nul powershell -Command "Get-AppxPackage *Microsoft.WindowsStore* | Reset-AppxPackage" - (Replaced With store.db File)
 
 :: Remove And Disable Widgets
 reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v TaskbarDa /t REG_DWORD /d 0 /f >NUL 2>&1
