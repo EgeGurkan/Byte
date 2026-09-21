@@ -5,15 +5,15 @@
 >nul reg add hkcu\Software\classes\.Admin\shell\runas\command /f /ve /d "cmd /x /d /r set \"f0=%%2\" &call \"%%2\" %%3" &set _= %*
 >nul fltmc || if "%f0%" neq "%~f0" ( cd.>"%tmp%\runas.Admin" &start "%~n0" /high "%tmp%\runas.Admin" "%~f0" "%_:"=""%" &exit /b )
 
-:: Stop Ads From MS
-:: >nul powershell -Command "Get-AppxPackage *Microsoft.WindowsStore* | Reset-AppxPackage" - (Replaced With store.db File)
+:: Stop Microsoft Windows Store Recommendation Ads in Start Menu
+>nul powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\Byte\Byte.ps1"
 
 :: Remove And Disable Widgets
 reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v TaskbarDa /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Dsh" /v AllowNewsAndInterests /t REG_DWORD /d 0 /f >NUL 2>&1
 reg add "HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Windows Feeds" /v EnableFeeds /t REG_DWORD /d 0 /f >NUL 2>&1
->nul powershell -noprofile -executionpolicy bypass -command "Get-AppxPackage -Name *WebExperience* | Foreach {Remove-AppxPackage $_.PackageFullName}"
->nul powershell -noprofile -executionpolicy bypass -command "Get-ProvisionedAppxPackage -Online | Where-Object { $_.PackageName -match 'WebExperience' } | ForEach-Object { Remove-ProvisionedAppxPackage -Online -PackageName $_.PackageName }"
+>nul powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Get-AppxPackage -Name *WebExperience* | Foreach {Remove-AppxPackage $_.PackageFullName}"
+>nul powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Get-ProvisionedAppxPackage -Online | Where-Object { $_.PackageName -match 'WebExperience' } | ForEach-Object { Remove-ProvisionedAppxPackage -Online -PackageName $_.PackageName }"
 
 :: Remove And Disable Chat
 reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v TaskbarMn /t REG_DWORD /d 0 /f >NUL 2>&1
@@ -32,9 +32,9 @@ reg add "HKEY_CURRENT_USER\Software\Microsoft\Office\Teams" /v PreventInstallati
 reg add "HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Office\16.0\Common\OfficeUpdate" /v PreventTeamsInstall /t REG_DWORD /d 1 /f >NUL 2>&1
 
 "%localappdata%\Microsoft\Teams\Update.exe" --uninstall --force-uninstall --system-level >NUL 2>&1
->nul powershell -nop -c "Get-WmiObject -Query ' select * from Win32_Product where Name like \"%%Team%%\" ' | ForEach-Object { ($_).Uninstall()}"
->nul powershell -noprofile -executionpolicy bypass -command "Get-AppxPackage -Name *Team* -AllUsers | Foreach {Remove-AppxPackage $_.PackageFullName -AllUsers}"
->nul powershell -noprofile -executionpolicy bypass -command "Get-ProvisionedAppxPackage -Online | Where-Object { $_.PackageName -match 'Team' } | ForEach-Object { Remove-ProvisionedAppxPackage -Online -AllUsers -PackageName $_.PackageName }"
+>nul powershell.exe -Nop -c "Get-WmiObject -Query ' select * from Win32_Product where Name like \"%%Team%%\" ' | ForEach-Object { ($_).Uninstall()}"
+>nul powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Get-AppxPackage -Name *Team* -AllUsers | Foreach {Remove-AppxPackage $_.PackageFullName -AllUsers}"
+>nul powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Get-ProvisionedAppxPackage -Online | Where-Object { $_.PackageName -match 'Team' } | ForEach-Object { Remove-ProvisionedAppxPackage -Online -AllUsers -PackageName $_.PackageName }"
 
 @RD /S /Q "%localappdata%\Microsoft\Teams\*" >NUL 2>&1
 @RD /S /Q "%localappdata%\Packages\MicrosoftTeams_8wekyb3d8bbwe\*" >NUL 2>&1
@@ -95,9 +95,9 @@ for /D %%i in ("%s_path%\Edge Internal\Application\*") do if exist "%%i\installe
 start "" /w "%%i\installer\setup.exe" --uninstall --msedge-internal --system-level --verbose-logging --force-uninstall --delete-profile
 )
 
->nul powershell -nop -c "Get-WmiObject -Query ' select * from Win32_Product where Name like \"%%MicrosoftEdge%%\" ' | ForEach-Object { ($_).Uninstall()}"
->nul powershell -noprofile -executionpolicy bypass -command "Get-AppxPackage -Name *MicrosoftEdge* -AllUsers | Foreach {Remove-AppxPackage $_.PackageFullName -AllUsers}"
->nul powershell -noprofile -executionpolicy bypass -command "Get-ProvisionedAppxPackage -Online | Where-Object { $_.PackageName -match 'MicrosoftEdge' } | ForEach-Object { Remove-ProvisionedAppxPackage -Online -AllUsers -PackageName $_.PackageName }"
+>nul powershell.exe -Nop -c "Get-WmiObject -Query ' select * from Win32_Product where Name like \"%%MicrosoftEdge%%\" ' | ForEach-Object { ($_).Uninstall()}"
+>nul powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Get-AppxPackage -Name *MicrosoftEdge* -AllUsers | Foreach {Remove-AppxPackage $_.PackageFullName -AllUsers}"
+>nul powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Get-ProvisionedAppxPackage -Online | Where-Object { $_.PackageName -match 'MicrosoftEdge' } | ForEach-Object { Remove-ProvisionedAppxPackage -Online -AllUsers -PackageName $_.PackageName }"
 
 del /f /q "%AppData%\Microsoft\Internet Explorer\Quick Launch\Microsoft Edge*.lnk" >NUL 2>&1
 del /f /q "C:\Windows\System32\config\systemprofile\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch\Microsoft Edge*.lnk" >NUL 2>&1
@@ -110,9 +110,9 @@ tskill /a OneDriveSetup >Nul 2>&1
 "C:\Windows\System32\OneDriveSetup.exe" /uninstall >Nul 2>&1
 for /D %%I in ("%localappdata%\Microsoft\OneDrive\*") do "%%~I\OneDriveSetup.exe" /uninstall >Nul 2>&1
 
->nul powershell -nop -c "Get-WmiObject -Query ' select * from Win32_Product where Name like \"%%OneDrive%%\" ' | ForEach-Object { ($_).Uninstall()}"
->nul powershell -noprofile -executionpolicy bypass -command "Get-AppxPackage -Name *OneDrive* -AllUsers | Foreach {Remove-AppxPackage $_.PackageFullName -AllUsers}"
->nul powershell -noprofile -executionpolicy bypass -command "Get-ProvisionedAppxPackage -Online | Where-Object { $_.PackageName -match 'OneDrive' } | ForEach-Object { Remove-ProvisionedAppxPackage -Online -AllUsers -PackageName $_.PackageName }"
+>nul powershell.exe -Nop -c "Get-WmiObject -Query ' select * from Win32_Product where Name like \"%%OneDrive%%\" ' | ForEach-Object { ($_).Uninstall()}"
+>nul powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Get-AppxPackage -Name *OneDrive* -AllUsers | Foreach {Remove-AppxPackage $_.PackageFullName -AllUsers}"
+>nul powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Get-ProvisionedAppxPackage -Online | Where-Object { $_.PackageName -match 'OneDrive' } | ForEach-Object { Remove-ProvisionedAppxPackage -Online -AllUsers -PackageName $_.PackageName }"
 
 Reg Delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "OneDriveSetup" /f >Nul 2>&1
 Reg Delete "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f >Nul 2>&1

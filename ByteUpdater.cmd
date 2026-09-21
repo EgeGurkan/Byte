@@ -17,6 +17,7 @@ cd /d C:\Byte >Nul 2>&1
 
 :: Clean Slate
 del /q /f C:\Byte\*.exe >Nul 2>&1
+del /q /f C:\Byte\*.ps1 >Nul 2>&1
 del /q /f C:\Byte\*.reg >Nul 2>&1
 del /q /f C:\Byte\*.vbs >Nul 2>&1
 del /q /f C:\Byte\*.xml >Nul 2>&1
@@ -26,9 +27,12 @@ del /q /f C:\Byte\Byte.cmd >Nul 2>&1
 curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/Admin.exe >Nul 2>&1
 curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/Byte.reg >Nul 2>&1
 curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/Byte.cmd >Nul 2>&1
+curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/Byte.ps1 >Nul 2>&1
 curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/ByteUpdater.cmd >Nul 2>&1
 curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/ByteHidden.vbs >Nul 2>&1
 curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/ByteTask.xml >Nul 2>&1
+
+Ping 127.0.0.1 -n 5 >nul
 
 :NotConnected
 :: Run Commands

@@ -107,6 +107,10 @@
 "AllowDevelopmentWithoutDevLicense"=dword:00000001
 "AllowAllTrustedApps"=dword:00000001
 
+; Enable Fast Startup
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Power]
+"HiberbootEnabled"=dword:00000001
+
 ; Enable Sudo
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Sudo]
 "Enabled"=dword:00000003
@@ -211,6 +215,16 @@
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsAI]
 "DisableAIDataAnalysis"=dword:00000001
+
+; Disable Click To Do
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\ClickToDo]
+"DisableClickToDo"=dword:00000001
+
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\WindowsAI]
+"DisableClickToDo"=-
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsAI]
+"DisableClickToDo"=dword:00000001
 
 ; Disable Copilot
 [HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\WindowsCopilot]
