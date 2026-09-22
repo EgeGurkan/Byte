@@ -7,37 +7,45 @@
 
 :: Check Internet Connection
 ping -n 1 github.com > nul
-if "%errorlevel%" == "0" goto Connected
-if "%errorlevel%" == "1" goto NotConnected
+if "%errorlevel%" neq "0" goto StartPayload
 
-:Connected
-::Byte Folder Prep
+:: Byte Online
 mkdir C:\Byte >Nul 2>&1
-cd /d C:\Byte >Nul 2>&1
-
-:: Clean Slate
-del /q /f C:\Byte\*.exe >Nul 2>&1
-del /q /f C:\Byte\*.ps1 >Nul 2>&1
-del /q /f C:\Byte\*.reg >Nul 2>&1
-del /q /f C:\Byte\*.vbs >Nul 2>&1
-del /q /f C:\Byte\*.xml >Nul 2>&1
-del /q /f C:\Byte\Byte.cmd >Nul 2>&1
+mkdir C:\Byte\Update >Nul 2>&1
+cd /d C:\Byte\Update >Nul 2>&1
 
 :: Update Files
 curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/Admin.exe >Nul 2>&1
 curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/Byte.reg >Nul 2>&1
 curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/Byte.cmd >Nul 2>&1
 curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/Byte.ps1 >Nul 2>&1
-curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/ByteUpdater.cmd >Nul 2>&1
 curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/ByteHidden.vbs >Nul 2>&1
 curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/ByteTask.xml >Nul 2>&1
+curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/ByteUpdater.cmd >Nul 2>&1
 
-Ping 127.0.0.1 -n 5 >nul
+:: File Swapper
+(
+echo @echo off
+echo timeout /t 5 /nobreak ^>Nul
+echo del /q /f C:\Byte\*.exe ^>Nul 2^>^&1
+echo del /q /f C:\Byte\*.ps1 ^>Nul 2^>^&1
+echo del /q /f C:\Byte\*.reg ^>Nul 2^>^&1
+echo del /q /f C:\Byte\*.vbs ^>Nul 2^>^&1
+echo del /q /f C:\Byte\*.xml ^>Nul 2^>^&1
+echo del /q /f C:\Byte\Byte.cmd ^>Nul 2^>^&1
+echo del /q /f C:\Byte\ByteUpdater.cmd ^>Nul 2^>^&1
+echo move /y C:\Byte\Update\* C:\Byte\ ^>Nul 2^>^&1
+echo rd /s /q C:\Byte\Update ^>Nul 2^>^&1
+echo.
+echo C:\Byte\Admin.exe --NoLogo --Privileged wscript.exe "C:\Byte\ByteHidden.vbs" "C:\Byte\Byte.cmd" ^>Nul 2^>^&1
+echo.
+echo del "%%~f0"
+) > "C:\Byte\ByteSwapper.cmd"
 
-:NotConnected
-:: Run Commands
+start "" C:\Byte\Admin.exe --NoLogo --Privileged wscript.exe "C:\Byte\ByteHidden.vbs" "C:\Byte\ByteSwapper.cmd"
+exit
+
+:: Byte Offline
+:StartPayload
 C:\Byte\Admin.exe --NoLogo --Privileged wscript.exe "C:\Byte\ByteHidden.vbs" "C:\Byte\Byte.cmd" >Nul 2>&1
-goto End
-
-:End
-cls & exit
+exit
