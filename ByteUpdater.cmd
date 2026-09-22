@@ -23,6 +23,9 @@ curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -
 curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/ByteTask.xml >Nul 2>&1
 curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/ByteUpdater.cmd >Nul 2>&1
 
+:: Prep
+copy /y C:\Byte\Update\ByteHidden.vbs C:\Byte\ >Nul 2>&1
+
 :: File Swapper
 (
 echo @echo off
