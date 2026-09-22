@@ -45,6 +45,7 @@ echo.
 echo del "%%~f0"
 ) > "C:\Byte\ByteSwapper.cmd"
 
+cd /d C:\Byte >Nul 2>&1
 start "" C:\Byte\Admin.exe --NoLogo --Privileged wscript.exe "C:\Byte\ByteHidden.vbs" "C:\Byte\ByteSwapper.cmd"
 exit
 
