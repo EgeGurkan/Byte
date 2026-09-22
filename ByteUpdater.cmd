@@ -40,6 +40,7 @@ echo del /q /f C:\Byte\ByteUpdater.cmd ^>Nul 2^>^&1
 echo move /y C:\Byte\Update\* C:\Byte\ ^>Nul 2^>^&1
 echo rd /s /q C:\Byte\Update ^>Nul 2^>^&1
 echo.
+echo timeout /t 5 /nobreak ^>Nul
 echo C:\Byte\Admin.exe --NoLogo --Privileged wscript.exe "C:\Byte\ByteHidden.vbs" "C:\Byte\Byte.cmd" ^>Nul 2^>^&1
 echo.
 echo del "%%~f0"
