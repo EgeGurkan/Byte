@@ -213,9 +213,9 @@
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CrossDeviceResume\Configuration]
 "IsResumeAllowed"=dword:00000000
 
-; Disable Settings Agent Search
+; Enable Settings Agent Search
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsAI]
-"DisableSettingsAgent"=dword:00000001
+"DisableSettingsAgent"=-
 
 ; Disable Recall Snapshots Feature
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsAI]
