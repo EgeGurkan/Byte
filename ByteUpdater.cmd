@@ -15,13 +15,23 @@ mkdir C:\Byte\Update >Nul 2>&1
 cd /d C:\Byte\Update >Nul 2>&1
 
 :: Update Files
-curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/Admin.exe >Nul 2>&1
-curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/Byte.reg >Nul 2>&1
-curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/Byte.cmd >Nul 2>&1
-curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/Byte.ps1 >Nul 2>&1
-curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/ByteHidden.vbs >Nul 2>&1
-curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/ByteTask.xml >Nul 2>&1
-curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/ByteUpdater.cmd >Nul 2>&1
+set "BASE_URL=https://raw.githubusercontent.com/EgeGurkan/Byte/main"
+curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 60 ^
+  -O "%BASE_URL%/Admin.exe" ^
+  -O "%BASE_URL%/Byte.reg" ^
+  -O "%BASE_URL%/Byte.cmd" ^
+  -O "%BASE_URL%/Byte.ps1" ^
+  -O "%BASE_URL%/ByteHidden.vbs" ^
+  -O "%BASE_URL%/ByteTask.xml" ^
+  -O "%BASE_URL%/ByteUpdater.cmd" >Nul 2>&1
+
+if not exist "C:\Byte\Update\Admin.exe" goto StartPayload
+if not exist "C:\Byte\Update\Byte.reg" goto StartPayload
+if not exist "C:\Byte\Update\Byte.cmd" goto StartPayload
+if not exist "C:\Byte\Update\Byte.ps1" goto StartPayload
+if not exist "C:\Byte\Update\ByteHidden.vbs" goto StartPayload
+if not exist "C:\Byte\Update\ByteTask.xml" goto StartPayload
+if not exist "C:\Byte\Update\ByteUpdater.cmd" goto StartPayload
 
 :: Prep
 copy /y C:\Byte\Update\ByteHidden.vbs C:\Byte\ >Nul 2>&1

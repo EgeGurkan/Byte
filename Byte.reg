@@ -17,17 +17,79 @@
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CI\Policy]
 "VerifiedAndReputablePolicyState"=dword:00000000
 
-; Turn off SmartScreen
+; ============================================================================
+; Disable Reputation-Based Protection (Geçmiş Temelli Koruma - Tamamı)
+; ============================================================================
+
+; 1. Check Apps and Files (Uygulamaları ve dosyaları denetleyin)
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]
 "EnableSmartScreen"=dword:00000000
 
-; Disable SmartScreen
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer]
 "SmartScreenEnabled"="Off"
 
-; Disable App Install Control
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\SmartScreen]
 "ConfigureAppInstallControlEnabled"=dword:00000000
+
+; 2. SmartScreen for Microsoft Edge (Microsoft Edge için SmartScreen)
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\MicrosoftEdge\PhishingFilter]
+"EnabledV9"=dword:00000000
+"PreventOverride"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\MicrosoftEdge\PhishingFilter]
+"EnabledV9"=dword:00000000
+"PreventOverride"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppContainer\Storage\microsoft.microsoftedge_8wekyb3d8bbwe\MicrosoftEdge\PhishingFilter]
+"EnabledV9"=dword:00000000
+"PreventOverride"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
+"SmartScreenEnabled"=dword:00000000
+"SmartScreenPuaEnabled"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\Edge]
+"SmartScreenEnabled"=dword:00000000
+"SmartScreenPuaEnabled"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\Microsoft\Edge\SmartScreenEnabled]
+@=dword:00000000
+
+; 3. Phishing Protection (Kimlik avından korunma ve alt kutucukları)
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WTDS\Components]
+"ServiceEnabled"=dword:00000000
+"NotifyMalicious"=dword:00000000
+"NotifyPasswordReuse"=dword:00000000
+"NotifyUnsafeApp"=dword:00000000
+"CaptureThreatWindow"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WTDS\Components]
+"ServiceEnabled"=dword:00000000
+"NotifyMalicious"=dword:00000000
+"NotifyPasswordReuse"=dword:00000000
+"NotifyUnsafeApp"=dword:00000000
+"CaptureThreatWindow"=dword:00000000
+
+; 4. Potentially Unwanted App Blocking (İstenmeyebilecek uygulama engelleme)
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender]
+"PUAProtection"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\MpEngine]
+"MpEnablePus"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Defender\MpEngine]
+"MpEnablePus"=dword:00000000
+
+; 5. SmartScreen for Microsoft Store Apps (Microsoft Store uygulamaları için SmartScreen)
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\AppHost]
+"EnableWebContentEvaluation"=dword:00000000
+"PreventOverride"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppHost]
+"EnableWebContentEvaluation"=dword:00000000
+"PreventOverride"=dword:00000000
+
+; ============================================================================
 
 ; Disable Vulnerable Driver Blocklist
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CI\Config]
@@ -124,7 +186,7 @@
 "TaskbarEndTask"=dword:00000001
 
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\DeveloperSettings]
-"TaskbarEndTask"=dword:00000001 
+"TaskbarEndTask"=dword:00000001
 
 ; Turn On Use Print Screen Key To Launch Screen Snipping
 [HKEY_CURRENT_USER\Control Panel\Keyboard]
@@ -172,11 +234,7 @@
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\PasswordLess\Device]
 "DevicePasswordLessBuildVersion"=dword:00000000
 
-; Disable Warnings At Opening Files For Publisher
-[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Associations]
-"LowRiskFileTypes"=".zip;.rar;.nfo;.txt;.exe;.bat;.vbs;.com;.cmd;.reg;.msi;.htm;.html;.gif;.bmp;.jpg;.avi;.mpg;.mpeg;.mov;.mp3;.m3u;.wav;"
-
-; Disable Block From Downloaded Files
+; Disable Warnings At Opening Files For Publisher & Block From Downloaded Files
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Associations]
 "LowRiskFileTypes"=".zip;.rar;.7z;.wim;.esd;.nfo;.txt;.epub;.mobi;.docx;.xlsx;.pptx;.pdf;.com;.htm;.html;.exe;.msi;.bat;.cmd;.ps1;.vbs;.reg;.psd;.psb;.ai;.dwg;.dxf;.obj;.fbx;.blend;.dae;.skp;.3ds;.3dm;.gh;.max;.rvt;.rdc;.gha;.wfp;.raw;.tif;.tiff;.webp;.gif;.bmp;.png;.hevc;.heic;.heif;.jpg;.jpeg;.avi;.mp4;.mpg;.mpeg;.mov;.mkv;.mp3;.m3u;.wav;"
 "DefaultFileTypeRisk"=dword:00006152
@@ -319,17 +377,10 @@
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\SearchSettings]
 "IsWebSuggestionsEnabled"=dword:00000000
 
-; Turn Off Web Search by Policy
-[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer]
-"DisableSearchBoxSuggestions"=dword:00000001
-
 ; Turn Off Bing Search by User Settings
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Search]
 "BingSearchEnabled"=dword:00000000
 "AllowSearchToUseLocation"=dword:00000000
-
-[HKEY_CURRENT_USER\SOFTWARE\Microsoft\CurrentVersion\Search]
-"BingSearchEnabled"=dword:00000000
 
 ; Disable Microsoft Edge Tabs At Alt Tab
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
@@ -341,7 +392,7 @@
 
 ; Disable Font Blocking
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\MitigationOptions]
-"MitigationOptions_FontBocking"=-
+"MitigationOptions_FontBlocking"=-
 
 ; Disable Pick Up Where You Left Off
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
@@ -359,7 +410,7 @@
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 "LaunchTo"=dword:00000001
 
-; Remove Dublicate Drives
+; Remove Duplicate Drives
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\DelegateFolders\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}]
 [-HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\DelegateFolders\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}]
 
@@ -393,12 +444,9 @@
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control]
 "WaitToKillServiceTimeout"="1000"
 
-; Improve General Responsiveness
+; Improve General Responsiveness & Disable Mouse Acceleration
 [HKEY_CURRENT_USER\Control Panel\Mouse]
 "MouseHoverTime"="300"
-
-; Disable Mouse Acceleration
-[HKEY_CURRENT_USER\Control Panel\Mouse]
 "MouseSpeed"="0"
 "MouseThreshold1"="0"
 "MouseThreshold2"="0"
@@ -424,42 +472,6 @@
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
 "NoWindowMinimizingShortcuts"=-
-
-; Disable Power Throttling
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling]
-"PowerThrottlingOff"=dword:00000001
-
-; Faster Turn On
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize]
-"StartupDelayInMSec"=dword:00000000
-
-; Faster Turn Off
-[HKEY_USERS\.DEFAULT\Control Panel\Desktop]
-"AutoEndTasks"="1"
-"HungAppTimeout"="1000"
-"MenuShowDelay"="100"
-"WaitToKillAppTimeout"="1000"
-"LowLevelHooksTimeout"="1000"
-
-[HKEY_CURRENT_USER\Control Panel\Desktop]
-"AutoEndTasks"="1"
-"HungAppTimeout"="1000"
-"MenuShowDelay"="100"
-"WaitToKillAppTimeout"="1000"
-"LowLevelHooksTimeout"="1000"
-
-[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control]
-"WaitToKillServiceTimeout"="1000"
-
-; Improve General Responsiveness
-[HKEY_CURRENT_USER\Control Panel\Mouse]
-"MouseHoverTime"="300"
-
-; Disable Mouse Acceleration
-[HKEY_CURRENT_USER\Control Panel\Mouse]
-"MouseSpeed"="0"
-"MouseThreshold1"="0"
-"MouseThreshold2"="0"
 
 ; Remove Previous Versions From Properties
 [-HKEY_CLASSES_ROOT\AllFilesystemObjects\shellex\PropertySheetHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
@@ -505,9 +517,6 @@
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\PreviousVersions]
 "DisableLocalPage"=-
 
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
-"NoPreviousVersionsPage"=-
-
 [HKEY_CURRENT_USER\Software\Policies\Microsoft\PreviousVersions]
 "DisableLocalPage"=-
 
@@ -537,24 +546,15 @@
 [HKEY_CURRENT_USER\Software\Microsoft\Input\TIPC]
 "Enabled"=dword:00000000
 
-; Disable Suggested Content In Settings App
+; Disable Suggested Content In Settings App, Start Menu, Tips, Welcome, Lock Screen
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager]
 "SubscribedContent-338393Enabled"=dword:00000000
 "SubscribedContent-353694Enabled"=dword:00000000
 "SubscribedContent-353696Enabled"=dword:00000000
-
-; Disable Start Menu Suggested Apps
 "SubscribedContent-338388Enabled"=dword:00000000
-
-; Disable Get Tips and Suggestions When Using Windows
 "SubscribedContent-338389Enabled"=dword:00000000
 "SubscribedContent-338392Enabled"=dword:00000000
-
-; Disable Windows Welcome Experience
 "SubscribedContent-310093Enabled"=dword:00000000
-
-; Disable Get Fun Facts Tips, Tricks and More on Lock Screen
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager]
 "RotatingLockScreenOverlayEnabled"=dword:00000000
 "SubscribedContent-338387Enabled"=dword:00000000
 
@@ -568,49 +568,33 @@
 
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Feeds]
 "ShellFeedsTaskbarViewMode"=dword:00000002
-
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Feeds]
 "ShellFeedsTaskbarOpenOnHover"=dword:00000000
 
-; Hide Widgets & Chat
+; Hide Widgets & Chat (Düzeltilmiş Tırnak İşareti)
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 "TaskbarDa"=dword:00000000
-“TaskbarMn”=dword:00000000
+"TaskbarMn"=dword:00000000
 
-; Start Show More Pins
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
-"Start_Layout"=dword:00000001
-
-; Start Last Actions
+; Start Show More Pins & Last Actions
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"Start_Layout"=dword:00000001
 "TaskbarAnimations"=dword:00000001
 "Start_TrackProgs"=dword:00000001
 "Start_TrackDocs"=dword:00000000
 
-; Disable Recommended Section From Start Menu
+; Disable Recommended Section & Websites From Start Menu
 [HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer]
 "HideRecommendedSection"=-
+"HideRecommendedPersonalizedSites"=dword:00000001
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
 "HideRecommendedSection"=dword:00000001
-
-; Disable Recommended Websites From Start Menu
-[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer]
 "HideRecommendedPersonalizedSites"=dword:00000001
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
-"HideRecommendedPersonalizedSites"=dword:00000001
-
-; Turn Off Show Recenty Added Apps
+; Start Menu Lists Configuration
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Start]
 "ShowRecentList"=dword:00000000
-
-; Turn Off Most Used List From Start Menu
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Start]
 "ShowFrequentList"=dword:00000000
-
-; Show All Pins On Start Menu
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Start]
 "ShowAllPinsList"=dword:00000001
 
 ; Stop Microsoft Windows Store Recommendation Ads in Start Menu
@@ -709,9 +693,12 @@
 
 [-HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}]
 
-; Turn Off Show Recommended Section in File Explorer Home
+; Turn Off Show Recommended Section, Recent, Frequent & Cloud Files in File Explorer
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
 "ShowRecommendations"=dword:00000000
+"ShowRecent"=dword:00000000
+"ShowFrequent"=dword:00000000
+"ShowCloudFilesInQuickAccess"=dword:00000000
 
 ; Hide Network From Navigation Pane
 [HKEY_CURRENT_USER\Software\Classes\CLSID\{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}]
@@ -721,18 +708,6 @@
 [HKEY_CURRENT_USER\Software\Classes\CLSID\{B2B4A4D1-2754-4140-A2EB-9A76D9D7CDC6}]
 @="Linux"
 "System.IsPinnedToNameSpaceTree"=dword:00000000
-
-; Hide Recent Files In Quick Access
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
-"ShowRecent"=dword:00000000
-
-; Hide Frequent Files In Quick Access
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
-"ShowFrequent"=dword:00000000
-
-; Hide Cloud Files In Quick Access
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
-"ShowCloudFilesInQuickAccess"=dword:00000000
 
 ; CMD Window GUI Settings
 [HKEY_CURRENT_USER\Console]
@@ -789,38 +764,17 @@
 "InterceptCopyPaste"=dword:00000000
 
 ; Context Menu New Removals
-; Remove Shortcut
 [-HKEY_CLASSES_ROOT\.lnk\ShellNew]
-
-; Remove BMP
 [-HKEY_CLASSES_ROOT\.bmp\ShellNew]
-
-; Remove Rar
 [-HKEY_CLASSES_ROOT\.rar\ShellNew]
-
-; Remove RTF
 [-HKEY_CLASSES_ROOT\.rtf\ShellNew]
-
-; Remove PSD
 [-HKEY_CLASSES_ROOT\.psd\ShellNew]
-
-; Remove Zip
 [-HKEY_CLASSES_ROOT\.zip\CompressedFolder\ShellNew]
 [-HKEY_CLASSES_ROOT\.zip\ShellNew]
-
-; Remove Microsoft Excel Worksheet
 [-HKEY_CLASSES_ROOT\.xlsx\Excel.Sheet.12\ShellNew]
-
-; Remove Microsoft Word Document
 [-HKEY_CLASSES_ROOT\.docx\Word.Document.12\ShellNew]
-
-; Remove Microsoft PowerPoint Presentation
 [-HKEY_CLASSES_ROOT\.pptx\PowerPoint.Show.12\ShellNew]
-
-; Remove Microsoft Publisher Document
 [-HKEY_CLASSES_ROOT\.pub\Publisher.Document.16\ShellNew]
-
-; Remove Microsoft Access Database
 [-HKEY_CLASSES_ROOT\.accdb\Access.Application.16\ShellNew]
 [-HKEY_CLASSES_ROOT\.mdb\ShellNew]
 
@@ -843,7 +797,7 @@
 "GameDVR_DXGIHonorFSEWindowsCompatible"=dword:00000000
 "GameDVR_EFSEFeatureFlags"=dword:00000000
 
-; Enable Capture
+; Enable Capture & GameDVR Settings
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR]
 "AllowGameDVR"=-
 
@@ -852,26 +806,11 @@
 
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR]
 "AppCaptureEnabled"=dword:00000000
-
-; Set Capture Lenght To 30 Min
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR]
 "MaximumRecordLength"=hex(b):00,34,e2,30,04,00,00,00
-
-; Set Capture Quality To 60 FPS
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR]
 "VideoEncodingFrameRateMode"=dword:00000001
-
-; Set Capture Quality To High
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR]
 "VideoEncodingBitrateMode"=dword:00000001
-
-; Turn On Capture Audio And Mute System And App Audio
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR]
 "AudioCaptureEnabled"=dword:00000001
 "EnablePerAppAudio"=dword:00000001
-
-; Turn On Historical Capture For 30 Secconds
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\GameDVR]
 "HistoricalCaptureEnabled"=dword:00000001
 
 ; Disable Windows Spotlight on Desktop Background
@@ -911,13 +850,14 @@
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates]
 "ShortcutNameTemplate"=-
 
-; CleanUp - Context Menu Entries To Use RunAsTI 
+; CleanUp - Context Menu Entries To Use RunAsTI
 [-HKEY_CLASSES_ROOT\RunAsTI]
 [-HKEY_CLASSES_ROOT\batfile\shell\Byte]
 [-HKEY_CLASSES_ROOT\cmdfile\shell\Byte]
 [-HKEY_CLASSES_ROOT\exefile\shell\Byte]
 [-HKEY_CLASSES_ROOT\mscfile\shell\Byte]
 [-HKEY_CLASSES_ROOT\Microsoft.PowerShellScript.1\shell\Byte]
+[-HKEY_CLASSES_ROOT\SystemFileAssociations\.ps1\shell\Byte]
 [-HKEY_CLASSES_ROOT\regfile\shell\Byte]
 [-HKEY_CLASSES_ROOT\Folder\shell\Byte]
 [-HKEY_CLASSES_ROOT\Directory\background\shell\extract]
@@ -958,8 +898,16 @@
 [HKEY_CLASSES_ROOT\mscfile\shell\Byte\command]
 @="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged --TrustedInstaller \"%1\""
 
-; RunAsTI on .ps1 (Daha önce konuştuğumuz SystemFileAssociations koruması ile)
-[HKEY_CLASSES_ROOT\Microsoft.PowerShellScript.1\shell\Byte] 
+; RunAsTI on .ps1 (Düzeltilmiş Anahtar Yapısı)
+[HKEY_CLASSES_ROOT\Microsoft.PowerShellScript.1\shell\Byte]
+"MUIVerb"="TrustedInstaller"
+"HasLUAShield"=""
+"Icon"="powershell.exe,0"
+"Position"="Middle"
+[HKEY_CLASSES_ROOT\Microsoft.PowerShellScript.1\shell\Byte\command]
+@="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged --TrustedInstaller powershell.exe -ExecutionPolicy Bypass -NoProfile -File \"%1\""
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.ps1\shell\Byte]
 "MUIVerb"="TrustedInstaller"
 "HasLUAShield"=""
 "Icon"="powershell.exe,0"
@@ -1199,7 +1147,7 @@
 [HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\07Menu\Command]
 @="cmd /c echo \\\"%1\\\" | powershell -nop $file=[string]$input; get-filehash -literalpath $file.substring(2,$file.length - 5) -algorithm RIPEMD160 ^| format-list; Start-Sleep 3600"
 
-; Allget-filehash -literalpath '%1' -algorithm RIPEMD160 | format-list
+; Show All Hashes
 [HKEY_CLASSES_ROOT\*\Shell\Hash\Shell\08Menu]
 "CommandFlags"=dword:00000020
 "MUIVerb"="Show all"
@@ -1322,84 +1270,48 @@ E0,F6,C5,D5,0E,CA,50,00,00
 ; Reserved - [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.SecHealthUI_8wekyb3d8bbwe]
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsFeedbackHub_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.GetHelp_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Getstarted_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MicrosoftEdgeDevToolsClient_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MicrosoftEdge_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MicrosoftEdge.Stable_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\MicrosoftTeams_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.BingNews_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.BingWeather_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.ZuneMusic_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.ZuneVideo_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Print3D_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.3DBuilder_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Microsoft3DViewer_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MicrosoftOfficeHub_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Office.OneNote_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.OneConnect_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.OneDriveSync_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.People_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.PeopleExperienceHost_cw5n1h2txyewy]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.ParentalControls_cw5n1h2txyewy]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.SkypeApp_kzf8qxf38zg5c]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\4DF9E0F8.Netflix_mcm4njqhnhss8]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\AmazonVideo.PrimeVideo_pwbj9vvecjh7j]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MicrosoftSolitaireCollection_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.MicrosoftStickyNotes_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Todos_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.YourPhone_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.PowerAutomateDesktop_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Windows.Photos_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsAlarms_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsCalculator_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsCamera_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsMaps_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.WindowsSoundRecorder_8wekyb3d8bbwe]
-
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Messaging_8wekyb3d8bbwe]
 
 ; GPU Material Error Fix - Enable Hardware Accelerated GPU Scheduling
 [HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\GraphicsDrivers]
 "TdrLevel"=dword:00000000
 "TdrDelay"=dword:00000064
-"HwSchMode"=dword:0000002
+"HwSchMode"=dword:00000002
 
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\GraphicsDrivers]
 "TdrLevel"=dword:00000000

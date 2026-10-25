@@ -36,18 +36,12 @@ reg add "HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Office\16.0\Common\Offic
 >nul powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Get-AppxPackage -Name *Team* -AllUsers | Foreach {Remove-AppxPackage $_.PackageFullName -AllUsers}"
 >nul powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Get-ProvisionedAppxPackage -Online | Where-Object { $_.PackageName -match 'Team' } | ForEach-Object { Remove-ProvisionedAppxPackage -Online -AllUsers -PackageName $_.PackageName }"
 
-@RD /S /Q "%localappdata%\Microsoft\Teams\*" >NUL 2>&1
-@RD /S /Q "%localappdata%\Packages\MicrosoftTeams_8wekyb3d8bbwe\*" >NUL 2>&1
-@RD /S /Q "%localappdata%\Microsoft\TeamsMeetingAddin\*" >NUL 2>&1
-@RD /S /Q "%localappdata%\Microsoft\TeamsPresenceAddin\*" >NUL 2>&1
-@RD /S /Q "%appdata%\Teams\*" >NUL 2>&1
-@RD /S /Q "%appdata%\Microsoft\Teams\*" >NUL 2>&1
-del /f /q "%localappdata%\Microsoft\Teams\*" >NUL 2>&1
-del /f /q "%localappdata%\Packages\MicrosoftTeams_8wekyb3d8bbwe\*" >NUL 2>&1
-del /f /q "%localappdata%\Microsoft\TeamsMeetingAddin\*" >NUL 2>&1
-del /f /q "%localappdata%\Microsoft\TeamsPresenceAddin\*" >NUL 2>&1
-del /f /q "%appdata%\Teams\*" >NUL 2>&1
-del /f /q "%appdata%\Microsoft\Teams\*" >NUL 2>&1
+rd /s /q "%localappdata%\Microsoft\Teams" >NUL 2>&1
+rd /s /q "%localappdata%\Packages\MicrosoftTeams_8wekyb3d8bbwe" >NUL 2>&1
+rd /s /q "%localappdata%\Microsoft\TeamsMeetingAddin" >NUL 2>&1
+rd /s /q "%localappdata%\Microsoft\TeamsPresenceAddin" >NUL 2>&1
+rd /s /q "%appdata%\Teams" >NUL 2>&1
+rd /s /q "%appdata%\Microsoft\Teams" >NUL 2>&1
 :SkipTeamsUninstall
 
 :: Uninstall Microsoft Edge Browser
@@ -118,30 +112,23 @@ Reg Delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "OneDriveSetu
 Reg Delete "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f >Nul 2>&1
 Reg Delete "HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f >Nul 2>&1
 
-@RD /S /Q "%localappdata%\Microsoft\OneDrive\*" >NUL 2>&1
-del /f /q "%localappdata%\Microsoft\OneDrive\*" >NUL 2>&1
-
-DEL /F /S /Q "%appdata%\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk" >Nul 2>&1
-DEL /F /S /Q "%windir%\SysWOW64\OneDriveSetup.exe" >Nul 2>&1
-DEL /F /S /Q "C:\Windows\System32\OneDriveSetup.exe" >Nul 2>&1
+rd /s /q "%localappdata%\Microsoft\OneDrive" >NUL 2>&1
+del /f /q "%appdata%\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk" >Nul 2>&1
+del /f /q "%windir%\SysWOW64\OneDriveSetup.exe" >Nul 2>&1
+del /f /q "C:\Windows\System32\OneDriveSetup.exe" >Nul 2>&1
 
 :: Tweak Google Chrome
 taskkill /f /im Software_reporter_tool.exe >NUL 2>&1
-icacls "%localappdata%\Google\Software Reporter Tool" /inheritance:e >NUL 2>&1
-icacls "%localappdata%\Google\Chrome\User Data\SwReporter" /inheritance:e >NUL 2>&1
-icacls "%localappdata%\Google\Chrome\User Data\OptGuideOnDeviceModel" /inheritance:e >NUL 2>&1
-@RD /S /Q "%localappdata%\Google\Software Reporter Tool\*" >NUL 2>&1
-del /f /q "%localappdata%\Google\Software Reporter Tool\*" >NUL 2>&1
-@RD /S /Q "%localappdata%\Google\Chrome\User Data\SwReporter\*" >NUL 2>&1
-del /f /q "%localappdata%\Google\Chrome\User Data\SwReporter\*" >NUL 2>&1
-@RD /S /Q "%localappdata%\Google\Chrome\User Data\OptGuideOnDeviceModel\*" >NUL 2>&1
-del /f /q "%localappdata%\Google\Chrome\User Data\OptGuideOnDeviceModel\*" >NUL 2>&1
-mkdir "%localappdata%\Google\Software Reporter Tool" >NUL 2>&1
-mkdir "%localappdata%\Google\Chrome\User Data\SwReporter" >NUL 2>&1
-mkdir "%localappdata%\Google\Chrome\User Data\OptGuideOnDeviceModel" >NUL 2>&1
-icacls "%localappdata%\Google\Software Reporter Tool" /inheritance:r >NUL 2>&1
-icacls "%localappdata%\Google\Chrome\User Data\SwReporter" /inheritance:r >NUL 2>&1
-icacls "%localappdata%\Google\Chrome\User Data\OptGuideOnDeviceModel" /inheritance:r >NUL 2>&1
+for %%G in (
+    "%localappdata%\Google\Software Reporter Tool"
+    "%localappdata%\Google\Chrome\User Data\SwReporter"
+    "%localappdata%\Google\Chrome\User Data\OptGuideOnDeviceModel"
+) do (
+    icacls "%%~G" /inheritance:e >NUL 2>&1
+    rd /s /q "%%~G" >NUL 2>&1
+    mkdir "%%~G" >NUL 2>&1
+    icacls "%%~G" /inheritance:r >NUL 2>&1
+)
 
 :: UnRegister Apps
 :: Reserved - SecHealthUI - MicrosoftPowerBIForWindows
@@ -149,29 +136,17 @@ set key=HKLM\Software\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Inb
 FOR %%i IN (3DBuilder 549981C3F5F10 BingNews BingWeather Clipchamp.Clipchamp Cortana DolbyAudioExtensions GetHelp Getstarted microsoftskydrive Microsoft.549981C3F5F10 Microsoft3DViewer MicrosoftCorporationII.MailforSurfaceHub MicrosoftCorporationII.MicrosoftFamily MicrosoftCorporationII.QuickAssist MicrosoftEdge MicrosoftEdgeDevToolsClient MicrosoftEdge.Stable MicrosoftOfficeHub MicrosoftPowerBIForWindows MicrosoftSolitaireCollection MicrosoftStickyNotes MicrosoftTeams MicrosoftTeamsforSurfaceHub MicrosoftWindows.Client.WebExperience Office.Excel Office.PowerPoint Office.Word Office.OneNote OneConnect OneDriveSync OutlookForWindows Paint People PeopleExperienceHost PowerAutomateDesktop Print3D ScreenSketch SkypeApp SpotifyAB.SpotifyMusic SpotifyMusic Todos Wallet Whiteboard Windows.Alarms Windows.CommunicationsApps Windows.FeedbackHub Windows.Maps Windows.MSPaint Windows.Paint Windows.ParentalControls Windows.Photos Windows.ScreenSketch Windows.SoundRecorder Windows.Terminal WindowsCalculator WindowsDevHome YourPhone ZuneMusic ZuneVideo) DO (FOR /F %%a IN ('reg query "%key%" /f %%i /k 2^>nul ^| find /i "InboxApplications"') DO IF NOT ERRORLEVEL 1 (reg delete %%a /f 2>nul))
 
 :: Refresh Byte
-:: Check Internet Connection
-ping -n 1 google.com > nul
-if "%errorlevel%" == "0" goto Connected
-if "%errorlevel%" == "1" goto NotConnected
-:Connected
-:NotConnected
 C:\Byte\Admin.exe --NoLogo --Privileged regedit.exe /s C:\Byte\Byte.reg >Nul 2>&1
 C:\Byte\Admin.exe --NoLogo --TrustedInstaller --Privileged regedit.exe /s C:\Byte\Byte.reg >Nul 2>&1
 schtasks /Delete /TN "\Microsoft\Windows\Byte\ByteTask" /f >Nul 2>&1
 schtasks /Create /XML C:\Byte\ByteTask.xml /tn "\Microsoft\Windows\Byte\ByteTask" >Nul 2>&1
 
 :: Update Byte Updater
-:: Check Internet Connection
-ping -n 1 github.com > nul
-if "%errorlevel%" == "0" goto Connected
-if "%errorlevel%" == "1" goto NotConnected
+ping -n 1 github.com | find /i "TTL=" > nul
+if "%errorlevel%" neq "0" goto End
 
-:Connected
-cd C:\Byte >Nul 2>&1
+cd /d C:\Byte >Nul 2>&1
 curl.exe -sfL --compressed --retry 5 --retry-delay 5 --connect-timeout 5 -m 30 -O https://raw.githubusercontent.com/EgeGurkan/Byte/main/ByteUpdater.cmd >Nul 2>&1
-
-:NotConnected
-goto End
 
 :End
 cls & exit
