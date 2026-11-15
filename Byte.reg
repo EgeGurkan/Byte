@@ -1091,6 +1091,23 @@
 [-HKEY_CLASSES_ROOT\Drive\shell\WSL]
 [-HKEY_CLASSES_ROOT\Directory\shell\WSL]
 
+; Remove Git From Right Click Context Menu
+[HKEY_CLASSES_ROOT\Directory\Background\shell\git_gui]
+"LegacyDisable"=""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\git_shell]
+"LegacyDisable"=""
+
+[HKEY_CLASSES_ROOT\Directory\shell\git_gui]
+"LegacyDisable"=""
+
+[HKEY_CLASSES_ROOT\Directory\shell\git_shell]
+"LegacyDisable"=""
+
+; Remove Tailscale From Right Click Context Menu
+[HKEY_CLASSES_ROOT\*\shell\tailscale]
+"LegacyDisable"=""
+
 ; Add Hash Value To Shift Right Click
 [HKEY_CLASSES_ROOT\*\Shell\Hash]
 "Icon"="imageres.dll,-198"
