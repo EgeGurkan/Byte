@@ -1,6 +1,10 @@
-﻿Windows Registry Editor Version 5.00
+Windows Registry Editor Version 5.00
 
 ; Disable UAC
+; https://www.elevenforum.com/t/change-user-account-control-uac-settings-in-windows-11.1523/
+; https://www.elevenforum.com/t/change-uac-behavior-for-administrators-in-windows-11.14782/
+; https://www.elevenforum.com/t/change-uac-behavior-for-standard-users-in-windows-11.13032/
+; Keeps UAC on (EnableLUA=1) but admins elevate silently without the secure desktop; standard users' elevation requests are auto-denied.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
 "PromptOnSecureDesktop"=dword:00000000
 "ConsentPromptBehaviorAdmin"=dword:00000000
@@ -14,6 +18,8 @@
 "FilterAdministratorToken"=dword:00000001
 
 ; Disable SAC
+; https://www.elevenforum.com/t/turn-on-or-off-smart-app-control-in-windows-11.4996/
+; Sets Smart App Control to Off so unknown/unsigned apps are not blocked.
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CI\Policy]
 "VerifiedAndReputablePolicyState"=dword:00000000
 
@@ -22,6 +28,8 @@
 ; ============================================================================
 
 ; 1. Check Apps and Files (Uygulamaları ve dosyaları denetleyin)
+; https://www.elevenforum.com/t/enable-or-disable-microsoft-defender-smartscreen-check-apps-and-files-from-web-in-windows-11.5731/
+; Turns off SmartScreen checks for apps and files downloaded from the web.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]
 "EnableSmartScreen"=dword:00000000
 
@@ -32,6 +40,9 @@
 "ConfigureAppInstallControlEnabled"=dword:00000000
 
 ; 2. SmartScreen for Microsoft Edge (Microsoft Edge için SmartScreen)
+; https://www.elevenforum.com/t/enable-or-disable-microsoft-defender-smartscreen-for-microsoft-edge-in-windows-11.5758/
+; https://www.elevenforum.com/t/enable-or-disable-potentially-unwanted-app-pua-protection-in-microsoft-edge.24795/
+; Turns off SmartScreen and potentially unwanted app (PUA) blocking in Edge (legacy and Chromium policies).
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\MicrosoftEdge\PhishingFilter]
 "EnabledV9"=dword:00000000
 "PreventOverride"=dword:00000000
@@ -56,6 +67,8 @@
 @=dword:00000000
 
 ; 3. Phishing Protection (Kimlik avından korunma ve alt kutucukları)
+; https://www.elevenforum.com/t/enable-or-disable-microsoft-defender-smartscreen-phishing-protection-windows-11.5721/
+; Turns off phishing protection and its warnings (malicious sites, password reuse, unsafe password storage).
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WTDS\Components]
 "ServiceEnabled"=dword:00000000
 "NotifyMalicious"=dword:00000000
@@ -71,6 +84,8 @@
 "CaptureThreatWindow"=dword:00000000
 
 ; 4. Potentially Unwanted App Blocking (İstenmeyebilecek uygulama engelleme)
+; https://www.elevenforum.com/t/enable-or-disable-microsoft-defender-pua-protection-in-windows-11.5762/
+; Turns off Microsoft Defender potentially unwanted app (PUA) blocking.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender]
 "PUAProtection"=dword:00000000
 
@@ -81,6 +96,8 @@
 "MpEnablePus"=dword:00000000
 
 ; 5. SmartScreen for Microsoft Store Apps (Microsoft Store uygulamaları için SmartScreen)
+; https://www.elevenforum.com/t/enable-or-disable-microsoft-defender-smartscreen-for-microsoft-store-apps-in-windows-11.5736/
+; Stops SmartScreen from checking web content (URLs) used by Microsoft Store apps.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\AppHost]
 "EnableWebContentEvaluation"=dword:00000000
 "PreventOverride"=dword:00000000
@@ -92,14 +109,20 @@
 ; ============================================================================
 
 ; Disable Vulnerable Driver Blocklist
+; https://www.elevenforum.com/t/enable-or-disable-microsoft-vulnerable-driver-blocklist-in-windows-11.10031/
+; Allows drivers on Microsoft's vulnerable driver blocklist to load (needed by some older tools/anti-cheat). Restart required.
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CI\Config]
 "VulnerableDriverBlocklistEnable"=dword:00000000
 
 ; Install Store Apps From Anywhere
+; https://www.elevenforum.com/t/choose-where-to-get-apps-in-windows-11.7370/
+; Sets "Choose where to get apps" to Anywhere, so installers outside the Microsoft Store are not blocked or warned about.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer]
 "AicEnabled"="Anywhere"
 
 ; Disable Windows Security Virus and Thread Protection Non Critical Notifications
+; https://www.elevenforum.com/t/enable-or-disable-windows-security-virus-and-threat-protection-notifications.10185/
+; Hides non-critical (informational) Virus & threat protection notifications; critical alerts still show.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Notifications]
 "DisableEnhancedNotifications"=dword:00000001
 
@@ -107,12 +130,16 @@
 "DisableNotifications"=-
 
 ; Disable Windows Security Account Protection Notifications
+; https://www.elevenforum.com/t/enable-or-disable-windows-security-account-protection-notifications.10189/
+; Stops Account protection notifications, including Windows Hello and Dynamic lock prompts.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows Defender Security Center\Account protection]
 "DisableNotifications"=dword:00000001
 "DisableWindowsHelloNotifications"=dword:00000001
 "DisableDynamiclockNotifications"=dword:00000001
 
 ; Disable Windows Security Firewall Notifications
+; https://www.elevenforum.com/t/enable-or-disable-microsoft-defender-firewall-notifications-in-windows-11.10210/
+; Stops firewall "blocked app" notifications for Domain, Private and Public networks.
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\DomainProfile]
 "DisableNotifications"=dword:00000001
 
@@ -123,14 +150,20 @@
 "DisableNotifications"=dword:00000001
 
 ; Edit Region
+; https://www.elevenforum.com/t/change-country-or-region-geographic-location-geoid-in-windows-11.4034/
+; Sets the device region and the default user's Geo location to United States (GeoID 244 = dword 0xF4 / string "244").
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Control Panel\DeviceRegion]
-"DeviceRegion"=dword:00000244
+"DeviceRegion"=dword:000000f4
 
 [HKEY_USERS\.DEFAULT\Control Panel\International\Geo]
 "Nation"="244"
 "Name"="US"
 
 ; Bypass Restrictions
+; https://www.elevenforum.com/t/bypass-windows-11-system-requirements-on-unsupported-pc.1989/
+; https://www.elevenforum.com/t/remove-system-requirements-not-met-watermark-on-windows-11-desktop.5241/
+; https://www.elevenforum.com/t/clean-install-windows-11.99/
+; Skips TPM/Secure Boot/CPU/RAM/storage checks, hides the "System requirements not met" notices and allows offline account setup (BypassNRO).
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\CompatMarkers]
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Shared]
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TargetVersionUpgradeExperienceIndicators]
@@ -165,23 +198,32 @@
   61,00,6d,00,4d,00,42,00,3d,00,38,00,31,00,39,00,32,00,00,00,00,00
 
 ; Enable Developer Mode
+; https://www.elevenforum.com/t/enable-or-disable-developer-mode-in-windows-11.928/
+; Turns on Developer Mode so apps can be sideloaded and run from loose files.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock]
 "AllowDevelopmentWithoutDevLicense"=dword:00000001
 "AllowAllTrustedApps"=dword:00000001
 
 ; Enable Fast Startup
+; https://www.elevenforum.com/t/turn-on-or-off-fast-startup-in-windows-11.1212/
+; Turns on Fast Startup (hybrid shutdown) for quicker boots after a shut down. Requires hibernation to be available.
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Power]
 "HiberbootEnabled"=dword:00000001
 
 ; Enable Sudo
+; https://www.elevenforum.com/t/enable-or-disable-sudo-command-in-windows-11.22329/
+; Turns on the sudo command in Inline mode (3), so elevated commands run in the current console window.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Sudo]
 "Enabled"=dword:00000003
 
 ; Enable Windows Script Host
+; Makes sure Windows Script Host is enabled so .vbs/.js scripts can run.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Script Host\Settings]
 "Enabled"=dword:00000001
 
 ; Turn On End Task in Taskbar By Right Click
+; https://www.elevenforum.com/t/enable-or-disable-end-task-in-taskbar-by-right-click-in-windows-11.14325/
+; Adds "End task" to the right-click menu of apps on the taskbar.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings]
 "TaskbarEndTask"=dword:00000001
 
@@ -189,18 +231,35 @@
 "TaskbarEndTask"=dword:00000001
 
 ; Turn On Use Print Screen Key To Launch Screen Snipping
+; https://www.elevenforum.com/t/enable-or-disable-use-print-screen-key-to-open-screen-snipping-in-windows-11.520/
+; Makes the Print Screen key open the Snipping Tool overlay.
 [HKEY_CURRENT_USER\Control Panel\Keyboard]
 "PrintScreenKeyForSnippingEnabled"=dword:00000001
 
 ; Turn Off Sticky Keys
+; https://www.elevenforum.com/t/enable-or-disable-keyboard-shortcut-for-sticky-keys-in-windows-11.50886/
+; Turns off Sticky Keys and stops pressing Shift five times from turning it on.
 [HKEY_CURRENT_USER\Control Panel\Accessibility\StickyKeys]
 "Flags"="26"
 
+; Turn Off Filter Keys & Toggle Keys Keyboard Shortcuts
+; https://www.elevenforum.com/t/enable-or-disable-keyboard-shortcut-for-filter-keys-in-windows-11.50888/
+; https://www.elevenforum.com/t/enable-or-disable-keyboard-shortcut-for-toggle-keys-in-windows-11.50889/
+; Stops right Shift (8 sec) and Num Lock (5 sec) from accidentally turning these on.
+[HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response]
+"Flags"="122"
+
+[HKEY_CURRENT_USER\Control Panel\Accessibility\ToggleKeys]
+"Flags"="58"
+
 ; Enable Long Path Support
+; https://www.elevenforum.com/t/enable-or-disable-win32-long-paths-in-windows-11.38860/
+; Removes the 260-character MAX_PATH limit for apps that support long paths.
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem]
 "LongPathsEnabled"=dword:00000001
 
 ; Allow Double Clicking To PS1 Files
+; Makes double-clicking a .ps1 file run it in PowerShell (no profile, ExecutionPolicy Bypass) instead of opening it in Notepad.
 [HKEY_CLASSES_ROOT\Applications\powershell.exe\shell\open\command]
 @="\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -Command \"& '%1' | Out-String -Width 9999\""
 
@@ -211,30 +270,43 @@
 @="\"C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe\" -NoProfile -ExecutionPolicy Bypass -Command \"& '%1' | Out-String -Width 9999\""
 
 ; To Allow Mapped Drives To Be Available In Elevated PowerShell
+; https://www.elevenforum.com/t/enable-or-disable-mapped-drives-available-in-elevated-command-prompt-in-windows-11.41838/
+; Makes mapped network drives also visible in elevated (admin) Command Prompt/PowerShell windows. Restart required.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
 "EnableLinkedConnections"=dword:00000001
 
 ; Disable Point-In Time Restore
+; https://www.elevenforum.com/t/enable-or-disable-point-in-time-restore-in-windows-11.42394/
+; Turns off the Point-in-time restore recovery feature (and its periodic restore points).
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\Recovery\PITR\Settings]
 "Active_UX"=dword:00000000
 
 ; Disable System Restore
+; https://www.elevenforum.com/t/enable-or-disable-system-restore-in-windows-11.15866/
+; Turns off System Restore by policy, so no restore points are created.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore]
 "DisableSR"=dword:00000001
 
 ; Turn Off Error Reporting
+; Turns off Windows Error Reporting, so crash reports are not collected or sent to Microsoft.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting]
 "Disabled"=dword:00000001
 
 ; Disable 7GB Reserved Update Space
+; https://www.elevenforum.com/t/enable-or-disable-reserved-storage-in-windows-11.21389/
+; Turns off Reserved Storage, freeing the ~7 GB Windows keeps for updates. Applies after the next update/restart.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\ReserveManager]
 "ShippedWithReserves"=dword:00000000
 
 ; Allow Log-In Without Typing Password
+; https://www.elevenforum.com/t/enable-or-disable-passwordless-sign-in-for-microsoft-accounts-in-windows-11.834/
+; Turns off "Only allow Windows Hello sign-in for Microsoft accounts", so password-based options (and netplwiz auto sign-in) are available again.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\PasswordLess\Device]
 "DevicePasswordLessBuildVersion"=dword:00000000
 
 ; Disable Warnings At Opening Files For Publisher & Block From Downloaded Files
+; https://www.elevenforum.com/t/unblock-file-downloaded-from-internet-in-windows-11.1125/
+; Treats the listed file types as low risk (no "Open File - Security Warning") and stops tagging downloads with Mark of the Web.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Associations]
 "LowRiskFileTypes"=".zip;.rar;.7z;.wim;.esd;.nfo;.txt;.epub;.mobi;.docx;.xlsx;.pptx;.pdf;.com;.htm;.html;.exe;.msi;.bat;.cmd;.ps1;.vbs;.reg;.psd;.psb;.ai;.dwg;.dxf;.obj;.fbx;.blend;.dae;.skp;.3ds;.3dm;.gh;.max;.rvt;.rdc;.gha;.wfp;.raw;.tif;.tiff;.webp;.gif;.bmp;.png;.hevc;.heic;.heif;.jpg;.jpeg;.avi;.mp4;.mpg;.mpeg;.mov;.mkv;.mp3;.m3u;.wav;"
 "DefaultFileTypeRisk"=dword:00006152
@@ -243,10 +315,12 @@
 "SaveZoneInformation"=dword:00000001
 
 ; Allow Share On Lan Tweaks
+; Allows insecure guest (unauthenticated) SMB logons to access older NAS/shared folders on the LAN.
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters]
 "AllowInsecureGuestAuth"=dword:00000001
 
 ; Enable Network Shared Printer
+; Restores RPC over named pipes and relaxes RPC privacy auth for print, fixing connections to older shared network printers.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC]
 "RpcUseNamedPipeProtocol"=dword:00000001
 "RpcProtocols"=dword:00000007
@@ -256,26 +330,39 @@
 "RpcAuthnLevelPrivacyEnabled"=dword:00000000
 
 ; Increase Wallpaper Quality
+; https://www.elevenforum.com/t/disable-desktop-wallpaper-jpeg-quality-reduction-in-windows-11.10782/
+; Sets JPEG wallpaper import quality to 100% so wallpapers are not compressed.
 [HKEY_CURRENT_USER\Control Panel\Desktop]
 "JPEGImportQuality"=dword:00000064
 
 ; Check "Do This For All Current Items" in File Conflict Dialog
+; https://www.elevenforum.com/t/check-or-uncheck-do-this-for-all-current-items-in-file-conflict-dialog-in-windows-11.26605/
+; Pre-checks "Do this for all current items" in copy/move conflict dialogs.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager]
 "ConfirmationCheckBoxDoForAll"=dword:00000001
 
 ; Show More Details In File Transfer
+; https://www.elevenforum.com/t/show-fewer-details-or-more-details-in-file-transfer-dialog-in-windows-11.26604/
+; Always opens the copy/move dialog with "More details" (speed graph) expanded.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager]
 "EnthusiastMode"=dword:00000001
 
 ; Disable Resume
+; https://www.elevenforum.com/t/enable-or-disable-resume-app-from-device-and-continue-on-windows-11-pc.29671/
+; Turns off Resume, which offers to continue on the PC what you were doing in an app on your phone.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CrossDeviceResume\Configuration]
 "IsResumeAllowed"=dword:00000000
 
 ; Enable Settings Agent Search
+; https://www.elevenforum.com/t/enable-or-disable-settings-search-agent-in-windows-11.39614/
+; Removes the policy that blocks the AI agent in Settings search, restoring the default (enabled).
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsAI]
 "DisableSettingsAgent"=-
 
 ; Disable Recall Snapshots Feature
+; https://www.elevenforum.com/t/enable-or-disable-recall-feature-in-windows-11.30869/
+; https://www.elevenforum.com/t/enable-or-disable-recall-snapshots-in-windows-11.25460/
+; Blocks Recall from being enabled and stops saving snapshots (AI data analysis) for all users.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsAI]
 "AllowRecallEnablement"=dword:00000000
 
@@ -286,6 +373,8 @@
 "DisableAIDataAnalysis"=dword:00000001
 
 ; Disable Click To Do
+; https://www.elevenforum.com/t/enable-or-disable-click-to-do-in-windows-11.35166/
+; Turns off Click to Do (Win + click screen actions) for the user and by machine policy.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\ClickToDo]
 "DisableClickToDo"=dword:00000001
 
@@ -296,6 +385,11 @@
 "DisableClickToDo"=dword:00000001
 
 ; Disable Copilot
+; https://www.elevenforum.com/t/enable-or-disable-windows-copilot-in-windows-11.17045/
+; https://www.elevenforum.com/t/add-or-remove-sidebar-in-microsoft-edge.4247/
+; https://www.elevenforum.com/t/enable-or-disable-bing-web-suggested-search-results-in-windows-search-on-windows-11.5309/
+; https://www.elevenforum.com/t/add-or-remove-copilot-button-on-taskbar-in-windows-11.16015/
+; Turns off Windows Copilot, Edge sidebar, search box web suggestions, the taskbar Copilot button and Copilot auto-open on large screens.
 [HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\WindowsCopilot]
 "TurnOffWindowsCopilot"=dword:00000001
 
@@ -317,23 +411,40 @@
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings]
 "AutoOpenCopilotLargeScreens"=dword:00000000
 
+; Disable Copilot App Web Browsing & Cowork Automatic Actions
+; https://www.elevenforum.com/t/enable-or-disable-web-browsing-in-copilot-app-on-windows-11.50094/
+; https://www.elevenforum.com/t/enable-or-disable-copilot-cowork-to-automatically-take-actions-in-copilot-app-on-windows-11.50096/
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Copilot]
+"BrowsingEnabled"=dword:00000000
+"CopilotCoworkToolActionsEnabled"=dword:00000000
+
 ; Disable Location Services
+; https://www.elevenforum.com/t/enable-or-disable-location-services-in-windows-11.3003/
+; Turns off location services for the whole device.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location]
 "Value"="Deny"
 
 ; Disable Location Allow Override
+; https://www.elevenforum.com/t/enable-or-disable-allow-location-override-in-windows-11.18038/
+; Turns off "Allow location override", so apps can't use location while location services are off.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CPSS\Store\UserLocationOverridePrivacySetting]
 "Value"=dword:00000000
 
 ; Disable Let Apps Access Your Location
+; https://www.elevenforum.com/t/turn-on-or-off-let-apps-access-location-in-windows-11.3017/
+; Turns off "Let apps access your location" for the current user.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location]
 "Value"="Deny"
 
 ; Disable Notify When Apps Request Location
+; https://www.elevenforum.com/t/turn-on-or-off-notify-when-apps-request-location-in-windows-11.18578/
+; Stops the notification shown when an app tries to use location while it is blocked.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location]
 "ShowGlobalPrompts"=dword:00000000
 
 ; Disable Required Diagnostic Data
+; https://www.elevenforum.com/t/enable-or-disable-send-required-and-optional-diagnostic-data-for-windows-11.2621/
+; Sets diagnostic data to the lowest level allowed by policy and limits the Settings maximum to Required.
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack]
 "ShowedToastAtLevel"=dword:00000001
 
@@ -345,14 +456,32 @@
 "AllowTelemetry"=dword:00000000
 
 ; Enable Classic Search, Disable Enhanced Search
+; https://www.elevenforum.com/t/turn-on-or-off-enhanced-mode-for-search-indexer-in-windows-11.2941/
+; Sets search indexer to Classic (Libraries and Desktop only) instead of Enhanced (whole PC).
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Search\Gather\Windows\SystemIndex]
 "EnableFindMyFiles"=dword:00000000
 
 ; Respect Power Modes For Search Indexer Performance
+; https://www.elevenforum.com/t/turn-on-or-off-respect-power-settings-when-indexing-in-windows-11.2960/
+; Makes the indexer follow power mode / battery saver settings and slow down when needed.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Search\Gather\Windows\SystemIndex]
 "RespectPowerModes"=dword:00000001
 
+; Restore Default Search Indexer Backoff During High System Activity
+; https://www.elevenforum.com/t/enable-or-disable-search-indexer-backoff-in-windows-11.48551/
+; Removes the override that prevents indexing from slowing down during heavy use.
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search]
+"DisableBackoff"=-
+
+; Disable Automatically Find Additional Relevant Search Index Locations
+; https://www.elevenforum.com/t/enable-or-disable-automatically-find-additional-relevant-search-index-locations-in-windows-11.48468/
+; https://www.elevenforum.com/t/remove-all-automatically-added-search-index-locations-in-windows-11.48917/
+; Stops Windows Search from adding folders to the index on its own based on file activity (keeps Classic Search scope). Restart required.
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Search\ScopeExpansion]
+"Enabled"=dword:00000000
+
 ; Disable Search WebView Usage
+; Feature override (ID 1694661260) that turns off WebView usage in Windows Search.
 [HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\FeatureManagement\Overrides\8\1694661260]
 "EnabledState"=dword:00000001
 "EnabledStateOptions"=dword:00000000
@@ -361,6 +490,9 @@
 "VariantPayloadKind"=dword:00000000
 
 ; Disable Showing Cloud Results In Search
+; https://www.elevenforum.com/t/enable-or-disable-cloud-content-search-for-accounts-in-windows-11.5378/
+; https://www.elevenforum.com/t/enable-or-disable-search-highlights-in-windows-11.5735/
+; Turns off cloud content search for Microsoft and work/school accounts, web search and search highlights.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search]
 "AllowCloudSearch"=dword:00000000
 "DisableWebSearch"=dword:00000001
@@ -371,63 +503,100 @@
 "IsAADCloudSearchEnabled"=dword:00000000
 
 ; Turn Off Safe Search
+; https://www.elevenforum.com/t/change-bing-safesearch-filters-in-windows-11.5389/
+; Sets Bing SafeSearch in Windows Search to Off.
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\SearchSettings]
 "SafeSearchMode"=dword:00000000
 
 ; Turn Off Web Search
+; https://www.elevenforum.com/t/enable-or-disable-bing-web-suggested-search-results-in-windows-search-on-windows-11.5309/
+; Stops Windows Search from showing web suggestions.
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\SearchSettings]
 "IsWebSuggestionsEnabled"=dword:00000000
 
 ; Turn Off Bing Search by User Settings
+; https://www.elevenforum.com/t/enable-or-disable-bing-web-suggested-search-results-in-windows-search-on-windows-11.5309/
+; Turns off Bing results in Windows Search and stops search from using location.
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Search]
 "BingSearchEnabled"=dword:00000000
 "AllowSearchToUseLocation"=dword:00000000
 
 ; Disable Microsoft Edge Tabs At Alt Tab
+; https://www.elevenforum.com/t/change-number-of-tabs-from-apps-to-show-when-snapping-or-alt-tab-in-windows-11.3836/
+; Shows only open windows in Alt+Tab and Snap Assist, not individual Edge tabs.
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 "MultiTaskingAltTabFilter"=dword:00000003
 
 ; Disable Emoji
+; https://www.elevenforum.com/t/show-or-hide-emoji-and-more-icon-on-taskbar-system-tray-in-windows-11.31314/
+; Hides the "Emoji and more" icon on the taskbar system tray.
 [HKEY_CURRENT_USER\Software\Microsoft\TabletTip\1.7]
 "EmojiAndMoreIconVisibilityState"=dword:00000000
 
 ; Disable Font Blocking
+; https://www.elevenforum.com/t/enable-or-disable-untrusted-font-blocking-in-windows-11.12882/
+; Removes the untrusted font blocking policy so fonts outside %windir%\Fonts are not blocked.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\MitigationOptions]
 "MitigationOptions_FontBlocking"=-
 
 ; Disable Pick Up Where You Left Off
+; https://www.elevenforum.com/t/enable-or-disable-auto-sign-in-and-lock-after-update-or-restart-in-windows-11.3324/
+; Stops Windows from auto signing in after updates/restarts to finish setup and reopen apps.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
 "DisableAutomaticRestartSignOn"=dword:00000001
 
 ; Disable Sync Provider Notification In File Explorer
+; https://www.elevenforum.com/t/enable-or-disable-sync-provider-notifications-in-file-explorer-in-windows-11.5200/
+; Hides OneDrive/Microsoft 365 promo banners (sync provider notifications) in File Explorer.
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 "ShowSyncProviderNotifications"=dword:00000000
 
 ; Narrator Shortcut
+; https://www.elevenforum.com/t/enable-or-disable-narrator-keyboard-shortcut-in-windows-11.6651/
+; Turns off the Win + Ctrl + Enter shortcut that starts Narrator.
 [HKEY_CURRENT_USER\Software\Microsoft\Narrator\NoRoam]
 "WinEnterLaunchEnabled"=dword:00000000
 
+; Disable Magnifier Shortcut (Win + Plus)
+; https://www.elevenforum.com/t/enable-or-disable-magnifier-win-plus-keyboard-shortcut-in-windows-11.50359/
+; Stops Win + Plus from accidentally launching Magnifier, like the Narrator shortcut above.
+[HKEY_CURRENT_USER\Software\Microsoft\ScreenMagnifier]
+"ShortcutKeyEnabled"=dword:00000000
+
 ; Launch To This PC
+; https://www.elevenforum.com/t/change-folder-to-open-file-explorer-to-by-default-in-windows-11.675/
+; Opens File Explorer to This PC instead of Home.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 "LaunchTo"=dword:00000001
 
 ; Remove Duplicate Drives
+; https://www.elevenforum.com/t/add-or-remove-duplicate-drives-in-navigation-pane-of-file-explorer-in-windows-11.3043/
+; Removes duplicate removable drive entries shown separately in the File Explorer navigation pane.
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\DelegateFolders\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}]
 [-HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\DelegateFolders\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}]
 
 ; Enable Clipboard History
+; https://www.elevenforum.com/t/enable-or-disable-clipboard-history-in-windows-11.973/
+; Removes the policy that blocks Clipboard history (Win + V), allowing it to be used.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]
 "AllowClipboardHistory"=-
 
 ; Disable Power Throttling
+; Turns off Power Throttling (EcoQoS), so background apps are not slowed down to save power.
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling]
 "PowerThrottlingOff"=dword:00000001
 
 ; Faster Turn On
+; https://www.elevenforum.com/t/enable-or-disable-delay-of-running-startup-apps-in-windows-11.9144/
+; Removes the delay before startup apps run after sign-in.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize]
 "StartupDelayInMSec"=dword:00000000
 
 ; Faster Turn Off
+; https://www.elevenforum.com/t/turn-on-or-off-autoendtasks-at-sign-out-restart-shut-down-in-windows-11.8283/
+; https://www.elevenforum.com/t/change-hungapptimeout-value-in-windows-11.8281/
+; https://www.elevenforum.com/t/change-waittokillservicetimeout-value-in-windows-11.23092/
+; Auto-closes hung apps and shortens app/service kill timeouts to 1 second for faster sign-out, restart and shut down; also shortens menu delay.
 [HKEY_USERS\.DEFAULT\Control Panel\Desktop]
 "AutoEndTasks"="1"
 "HungAppTimeout"="1000"
@@ -446,6 +615,8 @@
 "WaitToKillServiceTimeout"="1000"
 
 ; Improve General Responsiveness & Disable Mouse Acceleration
+; https://www.elevenforum.com/t/turn-on-or-off-enhance-pointer-precision-in-windows-11.7327/
+; Turns off Enhance pointer precision (mouse acceleration) and shortens mouse hover time.
 [HKEY_CURRENT_USER\Control Panel\Mouse]
 "MouseHoverTime"="300"
 "MouseSpeed"="0"
@@ -453,18 +624,26 @@
 "MouseThreshold2"="0"
 
 ; Disable Lets Finish Setting Up Your Device
+; https://www.elevenforum.com/t/enable-or-disable-lets-finish-setting-up-your-device-in-windows-11.5205/
+; Stops the "Let's finish setting up your device" screen after updates/sign-in.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\UserProfileEngagement]
 "ScoobeSystemSettingEnabled"=dword:00000000
 
 ; Disable Feedback Notifications
+; https://www.elevenforum.com/t/change-feedback-frequency-in-windows-11.7614/
+; Stops Windows from asking for feedback (Feedback frequency = Never) by policy.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DataCollection]
 "DoNotShowFeedbackNotifications"=dword:00000001
 
 ; Enable This PC To Access Mobile Devices
+; https://www.elevenforum.com/t/enable-or-disable-allow-pc-to-access-your-mobile-devices-in-windows-11.20862/
+; Turns on "Allow this PC to access your mobile devices" (use phone as connected camera, etc.).
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Mobility]
 "CrossDeviceEnabled"=dword:00000001
 
 ; Enable Shake To Minimize Windows
+; https://www.elevenforum.com/t/enable-or-disable-title-bar-window-shake-in-windows-11.2078/
+; Turns on title bar window shake (Aero Shake) and removes policies that block it.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 "DisallowShaking"=dword:00000000
 
@@ -474,27 +653,47 @@
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer]
 "NoWindowMinimizingShortcuts"=-
 
+; Disable "Customize menu" Tip On Context Menu
+; https://www.elevenforum.com/t/enable-or-disable-customize-menu-tip-in-windows-11.49402/
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\ContextMenu\Preferences]
+"CustomizeMenuTipDismissed"=dword:00000001
+
+; Remove "Customize menu" From Context Menu
+; https://www.elevenforum.com/t/add-or-remove-customize-menu-on-context-menu-in-windows-11.49400/
+; Removes the "Customize menu" entry at the bottom of the new context menu (Settings page stays available).
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\ContextMenu\Preferences\ShowCustomizeMenu]
+"Enabled"=dword:00000000
+
 ; Remove Previous Versions From Properties
+; https://www.elevenforum.com/t/add-or-remove-previous-versions-from-context-menu-and-properties-in-windows-11.9391/
+; Removes the Previous Versions tab from file, folder and drive Properties.
 [-HKEY_CLASSES_ROOT\AllFilesystemObjects\shellex\PropertySheetHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
 [-HKEY_CLASSES_ROOT\CLSID\{450D8FBA-AD25-11D0-98A8-0800361B1103}\shellex\PropertySheetHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
 [-HKEY_CLASSES_ROOT\Directory\shellex\PropertySheetHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
 [-HKEY_CLASSES_ROOT\Drive\shellex\PropertySheetHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
 
 ; Remove Previous Versions From Context Menu
+; https://www.elevenforum.com/t/add-or-remove-previous-versions-from-context-menu-and-properties-in-windows-11.9391/
+; Removes "Restore previous versions" from the context menu.
 [-HKEY_CLASSES_ROOT\AllFilesystemObjects\shellex\ContextMenuHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
 [-HKEY_CLASSES_ROOT\CLSID\{450D8FBA-AD25-11D0-98A8-0800361B1103}\shellex\ContextMenuHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
 [-HKEY_CLASSES_ROOT\Directory\shellex\ContextMenuHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
 [-HKEY_CLASSES_ROOT\Drive\shellex\ContextMenuHandlers\{596AB062-B4D2-4215-9F74-E9109B0A8153}]
 
 ; Remove Troubleshoot Compatibility From Context Menu
+; Blocks the shell extension that adds "Troubleshoot compatibility" to the context menu of programs.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked]
 "{1d27f844-3a1f-4410-85ac-14651078412d}"=""
 
 ; Remove Include In Library From Context Menu
+; https://www.elevenforum.com/t/add-or-remove-include-in-library-context-menu-in-windows-11.15843/
+; Removes "Include in library" from the folder context menu.
 [-HKEY_CLASSES_ROOT\Folder\ShellEx\ContextMenuHandlers\Library Location]
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Folder\ShellEx\ContextMenuHandlers\Library Location]
 
 ; Remove Run As Different User From Context Menu
+; https://www.elevenforum.com/t/add-or-remove-run-as-different-user-context-menu-in-explorer-in-windows-11.5080/
+; Removes "Run as different user" from the context menu of .exe, .bat, .cmd, .msc and .msi files.
 [-HKEY_CLASSES_ROOT\exefile\shell\runasuser]
 [-HKEY_CLASSES_ROOT\batfile\shell\runasuser]
 [-HKEY_CLASSES_ROOT\cmdfile\shell\runasuser]
@@ -502,6 +701,8 @@
 [-HKEY_CLASSES_ROOT\Msi.Package\shell\runasuser]
 
 ; Remove Run As Different User From Start Menu
+; https://www.elevenforum.com/t/add-or-remove-run-as-different-user-context-menu-on-start-in-windows-11.14289/
+; Removes the policy that adds "Run as different user" to app context menus on Start (default).
 [HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Explorer]
 "ShowRunAsDifferentUserInStart"=-
 
@@ -509,6 +710,8 @@
 "ShowRunasDifferentuserinStart"=-
 
 ; Remove Previous Versions Clear Any Policies
+; https://www.elevenforum.com/t/add-or-remove-previous-versions-from-context-menu-and-properties-in-windows-11.9391/
+; Clears any Previous Versions policies so the removals above are not overridden.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
 "NoPreviousVersionsPage"=-
 
@@ -522,10 +725,14 @@
 "DisableLocalPage"=-
 
 ; Disable Show Microsoft Account-Related Notifications on Start Menu
+; https://www.elevenforum.com/t/enable-or-disable-notification-badging-for-microsoft-accounts-on-start-menu-in-windows-11.14645/
+; Hides Microsoft account notifications/badges on the Start menu profile.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 "Start_AccountNotifications"=dword:00000000
 
 ; Disable Advertising ID
+; https://www.elevenforum.com/t/enable-or-disable-advertising-id-for-personalized-ads-in-apps-in-windows-11.3730/
+; Turns off the advertising ID used by apps to show personalized ads.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo]
 "Enabled"=dword:00000000
 
@@ -533,14 +740,38 @@
 "DisabledByGroupPolicy"=dword:00000001
 
 ; Disable Tailored Experiences
+; https://www.elevenforum.com/t/enable-or-disable-personalized-offers-in-windows-11.7554/
+; Stops Microsoft from using diagnostic data for personalized tips, ads and recommendations.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Privacy]
 "TailoredExperiencesWithDiagnosticDataEnabled"=dword:00000000
 
 ; Disable Speech Logging
+; https://www.elevenforum.com/t/enable-or-disable-online-speech-recognition-in-windows-11.7552/
+; Stops online speech recognition data (voice clips) from being logged/sent.
 [HKEY_CURRENT_USER\Software\Microsoft\Speech_OneCore\Settings\OnlineSpeechLogging]
 "LoggingAllowed"=dword:00000000
 
+; Disable Voice Activation By Apps, Including On Lock Screen
+; https://www.elevenforum.com/t/enable-or-disable-voice-activation-access-by-apps-in-windows-11.50033/
+; https://www.elevenforum.com/t/enable-or-disable-voice-activation-when-device-is-locked-access-by-apps-in-windows-11.50034/
+; Disables voice-triggered app activation, not general microphone access.
+[HKEY_CURRENT_USER\Software\Microsoft\Speech_OneCore\Settings\VoiceActivation\UserPreferenceForAllApps]
+"AgentActivationEnabled"=dword:00000000
+"AgentActivationOnLockScreenEnabled"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy]
+"LetAppsActivateWithVoice"=dword:00000002
+"LetAppsActivateWithVoiceAboveLock"=dword:00000002
+
+; Disable Foreground Text Access By Apps
+; https://www.elevenforum.com/t/enable-or-disable-foreground-text-access-by-apps-in-windows-11.49959/
+; Prevents apps (AI, OCR, writing assistants) from reading text in the foreground window. Policy applies on 26H2 and later.
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy]
+"LetAppsAccessForegroundText"=dword:00000002
+
 ; Disable Inking and Typing
+; https://www.elevenforum.com/t/enable-or-disable-improve-inking-and-typing-in-windows-11.7575/
+; Stops sending inking and typing data to Microsoft to improve recognition.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CPSS\Store\ImproveInkingAndTyping]
 "Value"=dword:00000000
 
@@ -548,6 +779,10 @@
 "Enabled"=dword:00000000
 
 ; Disable Suggested Content In Settings App, Start Menu, Tips, Welcome, Lock Screen
+; https://www.elevenforum.com/t/enable-or-disable-suggested-content-in-settings-in-windows-11.3791/
+; https://www.elevenforum.com/t/enable-or-disable-facts-tips-and-tricks-on-lock-screen-in-windows-11.7079/
+; https://www.elevenforum.com/t/disable-ads-in-windows-11.8004/
+; Turns off suggested content, tips, welcome experience and lock screen fun facts/ads.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager]
 "SubscribedContent-338393Enabled"=dword:00000000
 "SubscribedContent-353694Enabled"=dword:00000000
@@ -560,10 +795,14 @@
 "SubscribedContent-338387Enabled"=dword:00000000
 
 ; Disable "Show Recommendations For Tips, Shortcuts, New Apps, and More" on Start Menu
+; https://www.elevenforum.com/t/enable-or-disable-recommended-tips-shortcuts-new-apps-and-more-on-start-menu-in-windows-11.14346/
+; Hides tips, shortcuts and new app recommendations in Start's Recommended section.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 "Start_IrisRecommendations"=dword:00000000
 
 ; Hide News And Interests Weather
+; https://www.elevenforum.com/t/enable-or-disable-widgets-feature-in-windows-11.1196/
+; Turns off the news/weather feed (Widgets feeds) and hides it on the taskbar.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds]
 "EnableFeeds"=dword:00000000
 
@@ -572,11 +811,18 @@
 "ShellFeedsTaskbarOpenOnHover"=dword:00000000
 
 ; Hide Widgets & Chat (Düzeltilmiş Tırnak İşareti)
+; https://www.elevenforum.com/t/add-or-remove-widgets-button-on-taskbar-in-windows-11.32/
+; https://www.elevenforum.com/t/add-or-remove-chat-button-on-taskbar-in-windows-11.696/
+; Hides the Widgets and Chat buttons on the taskbar.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 "TaskbarDa"=dword:00000000
 "TaskbarMn"=dword:00000000
 
 ; Start Show More Pins & Last Actions
+; https://www.elevenforum.com/t/turn-on-or-off-show-all-pins-on-start-menu-in-windows-11.3148/
+; https://www.elevenforum.com/t/enable-or-disable-app-launch-tracking-in-windows-11.3727/
+; https://www.elevenforum.com/t/enable-or-disable-recommended-files-in-start-recent-files-in-file-explorer-and-items-in-jump-lists-in-windows-11.1161/
+; Uses the More pins Start layout, keeps app launch tracking on, and turns off recent files in Start, Explorer and Jump Lists.
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 "Start_Layout"=dword:00000001
 "TaskbarAnimations"=dword:00000001
@@ -584,6 +830,9 @@
 "Start_TrackDocs"=dword:00000000
 
 ; Disable Recommended Section & Websites From Start Menu
+; https://www.elevenforum.com/t/add-or-remove-recommended-section-on-start-menu-in-windows-11.21508/
+; https://www.elevenforum.com/t/add-or-remove-recommended-websites-on-start-menu-in-windows-11.10667/
+; Hides the Recommended section and recommended websites on Start by policy.
 [HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer]
 "HideRecommendedSection"=-
 "HideRecommendedPersonalizedSites"=dword:00000001
@@ -593,12 +842,18 @@
 "HideRecommendedPersonalizedSites"=dword:00000001
 
 ; Start Menu Lists Configuration
+; https://www.elevenforum.com/t/add-or-remove-recently-added-apps-on-start-menu-in-windows-11.1157/
+; https://www.elevenforum.com/t/hide-or-show-most-used-apps-list-on-start-menu-in-windows-11.761/
+; https://www.elevenforum.com/t/turn-on-or-off-show-all-pins-on-start-menu-in-windows-11.3148/
+; Hides the Recently added and Most used lists on Start and shows all pins.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Start]
 "ShowRecentList"=dword:00000000
 "ShowFrequentList"=dword:00000000
 "ShowAllPinsList"=dword:00000001
 
 ; Stop Microsoft Windows Store Recommendation Ads in Start Menu
+; https://www.elevenforum.com/t/enable-or-disable-microsoft-store-suggested-search-results-in-windows-search-on-windows-11.47667/
+; Turns off Store app suggestions/ads in Start and Windows Search via feature overrides and search settings.
 [HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\FeatureManagement\Overrides\8]
 
 [HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\FeatureManagement\Overrides\8\940684430]
@@ -621,12 +876,18 @@
 "IsStoreSuggestionsEnabled"=dword:00000000
 
 ; Remove Dev Home
+; https://www.elevenforum.com/t/prevent-installation-of-outlook-and-dev-home.33094/
+; Removes the update task that auto-installs Dev Home.
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsUpdate\Orchestrator\UScheduler_Oobe\DevHomeUpdate]
 
 ; Remove Outlook for Windows
+; https://www.elevenforum.com/t/prevent-installation-of-outlook-and-dev-home.33094/
+; Removes the update task that auto-installs the new Outlook for Windows.
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsUpdate\Orchestrator\UScheduler_Oobe\OutlookUpdate]
 
 ; Set Downloads Grouping To None
+; https://www.elevenforum.com/t/ungroup-downloads-folder.35966/
+; Sets the Downloads folder view to Group by (None) instead of Date modified groups.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderTypes\{885a186e-a440-4ada-812b-db871b942259}\TopViews\{00000000-0000-0000-0000-000000000000}]
 "ColumnList"="prop:0(34)System.ItemNameDisplay;0System.DateModified;0System.ItemTypeText;0System.Size;1System.DateCreated;1System.Author;1System.Category;1System.Keywords;1System.Title"
 "GroupAscending"=dword:00000000
@@ -638,6 +899,8 @@
 "SortByList"="prop:System.ItemNameDisplay"
 
 ; Add Show/Hide Gallery to Folder Options
+; https://www.elevenforum.com/t/add-show-gallery-on-navigation-pane-to-folder-options-in-windows-11.27301/
+; Adds a "Show Gallery" checkbox to Folder Options > View > Navigation pane.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\NavPane\ShowGallery]
 "CheckedValue"=dword:00000001
 "DefaultValue"=dword:00000001
@@ -650,6 +913,8 @@
 "ValueName"="System.IsPinnedToNameSpaceTree"
 
 ; Add Show/Hide Home to Folder Options
+; https://www.elevenforum.com/t/add-show-home-on-navigation-pane-to-folder-options-in-windows-11.27300/
+; Adds a "Show Home" checkbox to Folder Options > View > Navigation pane.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\NavPane\ShowHome]
 "CheckedValue"=dword:00000001
 "DefaultValue"=dword:00000001
@@ -662,6 +927,8 @@
 "ValueName"="System.IsPinnedToNameSpaceTree"
 
 ; Add Show/Hide Linux to Folder Options
+; https://www.elevenforum.com/t/add-show-linux-on-navigation-pane-to-folder-options-in-windows-11.27302/
+; Adds a "Show Linux" checkbox to Folder Options > View > Navigation pane.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\NavPane\ShowLinux]
 "CheckedValue"=dword:00000001
 "DefaultValue"=dword:00000001
@@ -674,6 +941,8 @@
 "ValueName"="System.IsPinnedToNameSpaceTree"
 
 ; Hide Gallery From Navigation Pane
+; https://www.elevenforum.com/t/add-or-remove-gallery-in-file-explorer-navigation-pane-in-windows-11.14178/
+; Hides Gallery in the File Explorer navigation pane.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}]
 @="Gallery"
 "HiddenByDefault"=dword:00000001
@@ -684,10 +953,14 @@
 "{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}"=dword:00000001
 
 ; Hide Add To Favourites (Home) From Context Menu
+; https://www.elevenforum.com/t/add-or-remove-add-to-favorites-context-menu-in-windows-11.6795/
+; Removes "Add to Favorites" from the file context menu.
 [HKEY_CLASSES_ROOT\*\shell\pintohomefile]
 "ProgrammaticAccessOnly"=""
 
 ; Hide Home From Navigation Pane
+; https://www.elevenforum.com/t/add-or-remove-home-in-navigation-pane-of-file-explorer-in-windows-11.2449/
+; Hides Home in the File Explorer navigation pane.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}]
 @="CLSID_MSGraphHomeFolder"
 "HiddenByDefault"=dword:00000001
@@ -695,6 +968,11 @@
 [-HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}]
 
 ; Turn Off Show Recommended Section, Recent, Frequent & Cloud Files in File Explorer
+; https://www.elevenforum.com/t/enable-or-disable-show-recommended-section-in-file-explorer-home-in-windows-11.25224/
+; https://www.elevenforum.com/t/add-or-remove-recent-files-in-file-explorer-home-in-windows-11.6825/
+; https://www.elevenforum.com/t/add-or-remove-frequent-folders-in-quick-access-in-windows-11.6858/
+; https://www.elevenforum.com/t/enable-or-disable-show-files-from-office-com-in-file-explorer-home-in-windows-11.6886/
+; Hides Recommended, Recent files, Frequent folders and cloud (Office.com) files in File Explorer Home.
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
 "ShowRecommendations"=dword:00000000
 "ShowRecent"=dword:00000000
@@ -702,15 +980,20 @@
 "ShowCloudFilesInQuickAccess"=dword:00000000
 
 ; Hide Network From Navigation Pane
+; https://www.elevenforum.com/t/add-or-remove-network-in-navigation-pane-of-file-explorer-in-windows-11.7272/
+; Hides Network in the File Explorer navigation pane.
 [HKEY_CURRENT_USER\Software\Classes\CLSID\{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}]
 "System.IsPinnedToNameSpaceTree"=dword:00000000
 
 ; Hide Linux From Navigation Pane
+; https://www.elevenforum.com/t/add-or-remove-linux-in-navigation-pane-of-file-explorer-in-windows-11.2531/
+; Hides Linux (WSL) in the File Explorer navigation pane.
 [HKEY_CURRENT_USER\Software\Classes\CLSID\{B2B4A4D1-2754-4140-A2EB-9A76D9D7CDC6}]
 @="Linux"
 "System.IsPinnedToNameSpaceTree"=dword:00000000
 
 ; CMD Window GUI Settings
+; Sets the classic console host (conhost) color scheme, font and window defaults for Command Prompt.
 [HKEY_CURRENT_USER\Console]
 "ColorTable00"=dword:002e232d
 "ColorTable01"=dword:00da3700
@@ -765,6 +1048,8 @@
 "InterceptCopyPaste"=dword:00000000
 
 ; Context Menu New Removals
+; https://www.elevenforum.com/t/add-or-remove-default-items-on-new-context-menu-in-windows-11.10362/
+; Removes unused items (Shortcut, Bitmap, RAR, RTF, PSD, ZIP, Office files, etc.) from the New context menu.
 [-HKEY_CLASSES_ROOT\.lnk\ShellNew]
 [-HKEY_CLASSES_ROOT\.bmp\ShellNew]
 [-HKEY_CLASSES_ROOT\.rar\ShellNew]
@@ -780,10 +1065,16 @@
 [-HKEY_CLASSES_ROOT\.mdb\ShellNew]
 
 ; Enable Game Mode
+; https://www.elevenforum.com/t/turn-on-or-off-game-mode-in-windows-11.1447/
+; Turns on Game Mode.
 [HKEY_CURRENT_USER\Software\Microsoft\GameBar]
 "AutoGameModeEnabled"=dword:00000001
 
 ; Enable Windowed Optimizations - Enable Variable Refresh Rate - Disable AutoHDR
+; https://www.elevenforum.com/t/turn-on-or-off-optimizations-for-windowed-games-in-windows-11.4943/
+; https://www.elevenforum.com/t/enable-or-disable-variable-refresh-rate-for-games-in-windows-11.12052/
+; https://www.elevenforum.com/t/turn-on-or-off-auto-hdr-in-windows-11.891/
+; Turns on optimizations for windowed games and VRR, and turns off Auto HDR.
 [HKEY_CURRENT_USER\Software\Microsoft\DirectX\GraphicsSettings]
 "SwapEffectUpgradeCache"=dword:00000001
 
@@ -791,6 +1082,8 @@
 "DirectXUserGlobalSettings"="VRROptimizeEnable=1;AutoHDREnable=0;SwapEffectUpgradeEnable=1;"
 
 ; Enable Fullscreen Optimizations
+; https://www.elevenforum.com/t/enable-or-disable-fullscreen-optimizations-for-games-in-windows-11.4945/
+; Keeps fullscreen optimizations on globally (FSE behavior = default).
 [HKEY_CURRENT_USER\System\GameConfigStore]
 "GameDVR_Enabled"=dword:00000000
 "GameDVR_FSEBehaviorMode"=dword:00000000
@@ -799,6 +1092,9 @@
 "GameDVR_EFSEFeatureFlags"=dword:00000000
 
 ; Enable Capture & GameDVR Settings
+; https://www.elevenforum.com/t/enable-or-disable-game-recording-for-captures-in-windows-11.17611/
+; https://www.elevenforum.com/t/enable-or-disable-record-what-happened-for-gaming-captures-in-windows-11.17900/
+; Removes the policy blocking game recording, and presets capture options (length, frame rate, bitrate, audio, background recording).
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR]
 "AllowGameDVR"=-
 
@@ -815,11 +1111,14 @@
 "HistoricalCaptureEnabled"=dword:00000001
 
 ; Disable Windows Spotlight on Desktop Background
+; https://www.elevenforum.com/t/enable-or-disable-windows-spotlight-on-desktop-background-in-windows-11.18246/
+; Prevents Windows Spotlight from being used as the desktop background (and its desktop icon).
 [HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\CloudContent]
 "DisableSpotlightCollectionOnDesktop"=dword:00000001
 "DisableWindowsSpotlightFeatures"=-
 
 ; Disable Dot Net and Powershell Telemetry
+; Sets environment variables that opt out of .NET CLI and PowerShell telemetry.
 [HKEY_CURRENT_USER\Environment]
 "DOTNET_CLI_TELEMETRY_OPTOUT"="1"
 "POWERSHELL_TELEMETRY_OPTOUT"="1"
@@ -829,6 +1128,8 @@
 "POWERSHELL_TELEMETRY_OPTOUT"="1"
 
 ; Disable Shortcut Icon
+; https://www.elevenforum.com/t/remove-shortcut-arrow-icon-in-windows-11.3814/
+; Removes the arrow overlay on shortcut icons. Needs C:\Windows\ICO.ico (transparent icon) to exist.
 [HKEY_CLASSES_ROOT\IE.AssocFile.URL]
 "IsShortcut"=""
 
@@ -845,6 +1146,8 @@
 "29"="C:\\Windows\\ICO.ico"
 
 ; Disable Shortcut Text
+; https://www.elevenforum.com/t/add-or-remove-shortcut-name-extension-in-windows-11.2291/
+; Stops adding "- Shortcut" to the name of new shortcuts.
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer]
 "link"=hex:00,00,00,00
 
@@ -852,6 +1155,7 @@
 "ShortcutNameTemplate"=-
 
 ; CleanUp - Context Menu Entries To Use RunAsTI
+; Removes old entries; the sections below add a "TrustedInstaller" context menu (.bat/.cmd/.exe/.msc/.ps1/.reg/folders) that runs via C:\Byte\Admin.exe.
 [-HKEY_CLASSES_ROOT\RunAsTI]
 [-HKEY_CLASSES_ROOT\batfile\shell\Byte]
 [-HKEY_CLASSES_ROOT\cmdfile\shell\Byte]
@@ -936,6 +1240,8 @@
 @="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged --TrustedInstaller cmd.exe /k cd /d \"%1\""
 
 ; Take Ownership (Files)
+; https://www.elevenforum.com/t/add-take-ownership-to-context-menu-in-windows-11.1230/
+; Adds "Ownership" to the Shift + right-click menu of files: takes ownership and grants full control.
 [HKEY_CLASSES_ROOT\*\Shell\Ownership]
 @="Ownership"
 "Icon"="imageres.dll,-88"
@@ -949,6 +1255,8 @@
 "IsolatedCommand"="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged cmd.exe /c takeown /f \"%1\" && icacls \"%1\" /grant *S-1-3-4:F /t /c /l"
 
 ; Add Terminal To Shift Right Click Context Menu
+; https://www.elevenforum.com/t/add-open-in-windows-terminal-expandable-context-menu-in-windows-11.583/
+; Adds a cascading "Terminal" menu (Shift + right-click) to the desktop, folders, folder background and drives.
 ; Desktop
 [HKEY_CLASSES_ROOT\DesktopBackground\Shell\Terminal]
 "Icon"=""
@@ -1074,6 +1382,7 @@
 @="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged wsl.exe --cd \"%V\""
 
 ; Remove Open Command Prompt Here From Right Click Context Menu
+; Removes the legacy "Open command window here" Shift + right-click entries.
 [-HKEY_CLASSES_ROOT\DesktopBackground\shell\CommandPrompt]
 [-HKEY_CLASSES_ROOT\Directory\shell\CommandPrompt]
 [-HKEY_CLASSES_ROOT\Directory\Background\shell\CommandPrompt]
@@ -1081,17 +1390,22 @@
 [-HKEY_CLASSES_ROOT\LibraryFolder\Background\shell\CommandPrompt]
 
 ; Remove Open Powershell Here From Right Click Context Menu
+; https://www.elevenforum.com/t/add-or-remove-open-powershell-window-here-context-menu-in-windows-11.20899/
+; Removes "Open PowerShell window here" from the Shift + right-click menu.
 [-HKEY_CLASSES_ROOT\Directory\Background\shell\PowerShell]
 [-HKEY_CLASSES_ROOT\Directory\shell\PowerShell]
 [-HKEY_CLASSES_ROOT\Drive\shell\PowerShell]
 [-HKEY_CLASSES_ROOT\LibraryFolder\Background\shell\PowerShell]
 
 ; Remove Open Linux Shell Here From Right Click Context Menu
+; https://www.elevenforum.com/t/add-or-remove-open-linux-shell-here-context-menu-in-windows-11.20962/
+; Removes "Open Linux shell here" (added by WSL) from the context menu.
 [-HKEY_CLASSES_ROOT\Directory\background\shell\WSL]
 [-HKEY_CLASSES_ROOT\Drive\shell\WSL]
 [-HKEY_CLASSES_ROOT\Directory\shell\WSL]
 
 ; Remove Git From Right Click Context Menu
+; Hides Git GUI/Git Bash Here entries from the folder context menu.
 [HKEY_CLASSES_ROOT\Directory\Background\shell\git_gui]
 "LegacyDisable"=""
 
@@ -1105,10 +1419,13 @@
 "LegacyDisable"=""
 
 ; Remove Tailscale From Right Click Context Menu
+; Hides the Tailscale entry from the file context menu.
 [HKEY_CLASSES_ROOT\*\shell\tailscale]
 "LegacyDisable"=""
 
 ; Add Hash Value To Shift Right Click
+; https://www.elevenforum.com/t/add-hash-value-to-context-menu-of-files-in-windows-11.22212/
+; Adds a "Hash" submenu (Shift + right-click) to show a file's MD5/SHA/other hashes.
 [HKEY_CLASSES_ROOT\*\Shell\Hash]
 "Icon"="imageres.dll,-198"
 "MUIVerb"="Hash"
@@ -1174,6 +1491,8 @@
 @="cmd /c echo \\\"%1\\\" | powershell -nop $raw=[string]$input; $file=$raw.substring(2,$raw.length - 5); \\\"Path:`n$file`n\\\"; @(foreach ($a in @('MD5','SHA1','SHA256','SHA384','SHA512','MACTripleDES','RIPEMD160')) { get-filehash -literalpath $file -algorithm $a }) ^| foreach { \\\"$($_.Algorithm):`n$($_.Hash)`n\\\" }; Start-Sleep 3600"
 
 ; Take Ownership (Folders)
+; https://www.elevenforum.com/t/add-take-ownership-to-context-menu-in-windows-11.1230/
+; Adds "Ownership" to the Shift + right-click menu of folders (protected system folders excluded).
 [HKEY_CLASSES_ROOT\Directory\Shell\Ownership]
 @="Ownership"
 "Icon"="imageres.dll,-88"
@@ -1188,6 +1507,8 @@
 "IsolatedCommand"="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged cmd.exe /c takeown /f \"%1\" /r /d y && icacls \"%1\" /grant *S-1-3-4:F /t /c /l /q"
 
 ; Take Ownership (Drives Except System)
+; https://www.elevenforum.com/t/add-take-ownership-to-context-menu-in-windows-11.1230/
+; Adds "Ownership" to the Shift + right-click menu of drives except C:.
 [HKEY_CLASSES_ROOT\Drive\Shell\Runas]
 @="Ownership"
 "Icon"="imageres.dll,-88"
@@ -1202,6 +1523,8 @@
 "IsolatedCommand"="\"C:\\Byte\\Admin.exe\" --NoLogo --Privileged cmd.exe /c takeown /f \"%1\\\" /r /d y && icacls \"%1\\\" /grant *S-1-3-4:F /t /c"
 
 ; Turn Off DND (Do Not Disturb)
+; https://www.elevenforum.com/t/turn-on-or-off-do-not-disturb-for-notifications-in-windows-11.4738/
+; Sets Do not disturb to Off (Unrestricted profile).
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\$$windows.data.notifications.quiethourssettings\Current]
 "Data"=hex(3):02,00,00,00,B4,67,2B,68,F0,0B,D8,01,00,00,00,00,43,42,01,00,\
 C2,0A,01,D2,14,28,4D,00,69,00,63,00,72,00,6F,00,73,00,6F,00,66,00,74,00,2E,\
@@ -1246,6 +1569,8 @@ C2,0A,01,D2,1E,28,4D,00,69,00,63,00,72,00,6F,00,73,00,6F,00,66,00,74,00,2E,\
 E0,F6,C5,D5,0E,CA,50,00,00
 
 ; Hide Folders From This PC
+; https://www.elevenforum.com/t/add-or-remove-folders-under-this-pc-in-file-explorer-in-windows-11.7122/
+; Removes the user folders (3D Objects, Desktop, Documents, Downloads, Music, Pictures, Videos) from This PC.
 ; 3D Objects
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}]
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}]
@@ -1285,6 +1610,7 @@ E0,F6,C5,D5,0E,CA,50,00,00
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}]
 
 ; DeProvision
+; Marks the listed inbox apps as deprovisioned so they are not reinstalled by feature updates or for new users.
 ; Reserved - [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.SecHealthUI_8wekyb3d8bbwe]
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned]
@@ -1326,6 +1652,8 @@ E0,F6,C5,D5,0E,CA,50,00,00
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned\Microsoft.Messaging_8wekyb3d8bbwe]
 
 ; GPU Material Error Fix - Enable Hardware Accelerated GPU Scheduling
+; https://www.elevenforum.com/t/turn-on-or-off-hardware-accelerated-gpu-scheduling-in-windows-11.852/
+; Turns on Hardware-accelerated GPU scheduling and changes TDR settings (TdrLevel 0 = no GPU timeout recovery).
 [HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\GraphicsDrivers]
 "TdrLevel"=dword:00000000
 "TdrDelay"=dword:00000064
@@ -1337,18 +1665,22 @@ E0,F6,C5,D5,0E,CA,50,00,00
 "HwSchMode"=dword:00000002
 
 ; Disable AMD Context Menu
+; Blocks the AMD Software shell extension on the desktop context menu.
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked]
 "{FDADFEE3-02D1-4E7C-A511-380F4C98D73B}"=""
 
 ; Disable Nvidia Context Menu
+; Hides the NVIDIA Control Panel entry from the desktop context menu.
 [HKEY_CURRENT_USER\Software\NVIDIA Corporation\Global\NvCplApi\Policies]
 "ContextUIPolicy"=dword:00000000
 
 ; Disable Intel Context Menu
+; Removes Intel graphics entries from the desktop context menu.
 [-HKEY_CLASSES_ROOT\Directory\Background\shellex\ContextMenuHandlers\igfxcui]
 [-HKEY_CLASSES_ROOT\Directory\Background\shellex\ContextMenuHandlers\igfxDTCM]
 
 ; Force .Net Latest Version
+; Commented out: would make .NET apps roll forward to the latest installed major runtime.
 ; [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment]
 ; "DOTNET_ROLL_FORWARD"="LatestMajor"
 ; [HKEY_CURRENT_USER\Environment]
