@@ -1420,8 +1420,12 @@ Windows Registry Editor Version 5.00
 
 ; Remove Tailscale From Right Click Context Menu
 ; Hides the Tailscale entry from the file context menu.
-[HKEY_CLASSES_ROOT\*\shell\tailscale]
-"LegacyDisable"=""
+[-HKEY_CLASSES_ROOT\*\shell\tailscale]
+
+; Remove HopToDesk From Right Click Context Menu
+[-HKEY_CLASSES_ROOT\PackagedCom\ClassIndex\{BE4BAB2A-AED6-91DC-0DB5-34DE3092FB07}]
+[-HKEY_CLASSES_ROOT\*\shell\hoptodesksendfile]
+[-HKEY_CLASSES_ROOT\Directory\shell\hoptodesksendfile]
 
 ; Add Hash Value To Shift Right Click
 ; https://www.elevenforum.com/t/add-hash-value-to-context-menu-of-files-in-windows-11.22212/
